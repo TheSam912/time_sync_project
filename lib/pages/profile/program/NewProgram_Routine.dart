@@ -7,12 +7,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import '../Widgets/custom_snackbar.dart';
-import '../utils/AppColor.dart';
-import '../utils/request.dart';
-import '../model/ProgramModel.dart';
-import '../provider/programProvider.dart';
-import '../provider/sliderProvider.dart';
+import '../../../Widgets/custom_snackbar.dart';
+import '../../../utils/AppColor.dart';
+import '../../../utils/request.dart';
+import '../../../model/ProgramModel.dart';
+import '../../../provider/programProvider.dart';
+import '../../../provider/sliderProvider.dart';
 
 class NewProgramRoutine extends ConsumerStatefulWidget {
   NewProgramRoutine(

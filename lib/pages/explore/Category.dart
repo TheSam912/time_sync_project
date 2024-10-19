@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
-import '../Widgets/Second_template.dart';
-import '../repository/programRepository.dart';
-import '../utils/AppColor.dart';
+import '../../Widgets/Second_template.dart';
+import '../../repository/programRepository.dart';
+import '../../utils/AppColor.dart';
 
 class Category extends ConsumerStatefulWidget {
   Category({super.key, required this.category});

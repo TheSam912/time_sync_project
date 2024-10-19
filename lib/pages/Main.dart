@@ -20,9 +20,7 @@ class MainPage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 "assets/icons/home.svg",
-                color: navigationShell.currentIndex == 0
-                    ? Colors.amber
-                    : Colors.grey.shade700,
+                color: navigationShell.currentIndex == 0 ? Colors.amber : Colors.grey.shade700,
                 width: 28,
                 height: 28,
               ),
@@ -30,9 +28,7 @@ class MainPage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 "assets/icons/explore.svg",
-                color: navigationShell.currentIndex == 1
-                    ? Colors.amber
-                    : Colors.grey.shade700,
+                color: navigationShell.currentIndex == 1 ? Colors.amber : Colors.grey.shade700,
                 width: 28,
                 height: 28,
               ),
@@ -40,9 +36,7 @@ class MainPage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Image.asset(
                 "assets/icons/user.png",
-                color: navigationShell.currentIndex == 2
-                    ? Colors.amber
-                    : Colors.grey.shade700,
+                color: navigationShell.currentIndex == 2 ? Colors.amber : Colors.grey.shade700,
                 width: 25,
                 height: 25,
               ),

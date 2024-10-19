@@ -6,9 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../Widgets/custom_snackbar.dart';
-import '../utils/AppColor.dart';
-import '../utils/auth_service.dart';
+
+import '../../../Widgets/custom_snackbar.dart';
+import '../../../utils/AppColor.dart';
+import '../../../utils/auth_service.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});
@@ -63,11 +64,11 @@ class _LoginState extends ConsumerState<Login> {
     return Scaffold(
       backgroundColor: AppColors.mainItemColor,
       appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 70),
+          preferredSize: const Size(double.infinity, 70),
           child: Container(
             alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(top: 30),
-            margin: EdgeInsets.only(right: 12, top: 20),
+            padding: const EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(right: 12, top: 20),
           )),
       body: Stack(
         children: [
@@ -79,13 +80,13 @@ class _LoginState extends ConsumerState<Login> {
             child: Container(
               alignment: Alignment.center,
               child: ListView(
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 shrinkWrap: true,
                 children: [
                   Container(
                     height: 150,
                     width: 150,
-                    margin: EdgeInsets.only(bottom: 16),
+                    margin: const EdgeInsets.only(bottom: 16),
                     child: Image.asset(
                       "assets/images/successful.png",
                       color: Colors.amber,
@@ -122,7 +123,7 @@ class _LoginState extends ConsumerState<Login> {
                                 hintStyle:
                                     GoogleFonts.nunito(fontSize: 14, color: Colors.grey.shade500)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                           TextFormField(
@@ -166,7 +167,7 @@ class _LoginState extends ConsumerState<Login> {
                                 hintStyle:
                                     GoogleFonts.nunito(fontSize: 14, color: Colors.grey.shade500)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                         ],
@@ -184,7 +185,7 @@ class _LoginState extends ConsumerState<Login> {
                       width: size.width,
                       height: 50,
                       alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12), color: Colors.amber),
                       child: Text(
@@ -202,7 +203,7 @@ class _LoginState extends ConsumerState<Login> {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.only(right: 30, top: 5),
+                      margin: const EdgeInsets.only(right: 30, top: 5),
                       child: Text(
                         "Forget Password",
                         textAlign: TextAlign.right,
@@ -259,8 +260,8 @@ class _LoginState extends ConsumerState<Login> {
 
   textInputSection(hint, icon, obscure, type, controller) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.backgroundColor, width: 0.5)),
@@ -299,7 +300,7 @@ class _LoginState extends ConsumerState<Login> {
                     Icons.remove_red_eye_outlined,
                     color: Colors.grey.shade500,
                   ))
-              : Center()
+              : const Center()
         ],
       ),
     );

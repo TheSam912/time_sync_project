@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import '../pages/Login.dart';
-import '../Widgets/custom_snackbar.dart';
-import '../Widgets/editProgramBottomSheet.dart';
-import '../Widgets/showEmptyDesign.dart';
-import '../model/ProgramModel.dart';
-import '../model/UserModel.dart';
-import '../provider/usersProvider.dart';
-import '../repository/programRepository.dart';
-import '../repository/usersRepository.dart';
-import '../utils/AppColor.dart';
-import '../utils/auth_service.dart';
+import 'auth/Login.dart';
+import '../../Widgets/custom_snackbar.dart';
+import '../../Widgets/editProgramBottomSheet.dart';
+import '../../Widgets/showEmptyDesign.dart';
+import '../../model/ProgramModel.dart';
+import '../../model/UserModel.dart';
+import '../../provider/usersProvider.dart';
+import '../../repository/programRepository.dart';
+import '../../repository/usersRepository.dart';
+import '../../utils/AppColor.dart';
+import '../../utils/auth_service.dart';
 
 class Profile extends ConsumerStatefulWidget {
   Profile({super.key, required this.selectedProgram});

@@ -7,15 +7,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Widgets/Second_template.dart';
-import '../model/UserModel.dart';
-import '../provider/usersProvider.dart';
-import '../repository/usersRepository.dart';
-import '../Widgets/HomePage_Widgets.dart';
-import '../model/ProgramModel.dart';
-import '../repository/homeRepository.dart';
-import '../utils/AppColor.dart';
-import '../utils/internet_connection_checker.dart';
+import '../../Widgets/Second_template.dart';
+import '../../model/UserModel.dart';
+import '../../provider/usersProvider.dart';
+import '../../repository/usersRepository.dart';
+import '../../Widgets/HomePage_Widgets.dart';
+import '../../model/ProgramModel.dart';
+import '../../repository/homeRepository.dart';
+import '../../utils/AppColor.dart';
+import '../../utils/internet_connection_checker.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({super.key});

@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../Widgets/Indicator.dart';
-import '../Widgets/custom_snackbar.dart';
-import '../model/ProgramModel.dart';
-import '../provider/usersProvider.dart';
-import '../repository/programRepository.dart';
-import '../repository/usersRepository.dart';
-import '../utils/AppColor.dart';
+import '../../Widgets/Indicator.dart';
+import '../../Widgets/custom_snackbar.dart';
+import '../../model/ProgramModel.dart';
+import '../../provider/usersProvider.dart';
+import '../../repository/programRepository.dart';
+import '../../repository/usersRepository.dart';
+import '../../utils/AppColor.dart';
 
 class Detail extends ConsumerStatefulWidget {
   Detail({required this.Id});

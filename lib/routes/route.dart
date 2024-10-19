@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../pages/Category.dart';
-import '../pages/Detail.dart';
-import '../pages/EditProgram.dart';
-import '../pages/Explore.dart';
-import '../pages/ForgetPassword.dart';
-import '../pages/NewProgram.dart';
-import '../pages/NewProgram_Routine.dart';
-import '../pages/Profile.dart';
-import '../pages/Home.dart';
+import '../pages/explore/Category.dart';
+import '../pages/home/Detail.dart';
+import '../pages/profile/program/EditProgram.dart';
+import '../pages/explore/Explore.dart';
+import '../pages/profile/auth/ForgetPassword.dart';
+import '../pages/profile/program/NewProgram.dart';
+import '../pages/profile/Profile.dart';
+import '../pages/home/Home.dart';
 import '../pages/Main.dart';
-import '../pages/Register.dart';
+import '../pages/profile/auth/Register.dart';
+import '../pages/profile/program/NewProgram_Routine.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
@@ -87,7 +87,7 @@ final GoRouter router =
           sliceTitle3: state.uri.queryParameters['sliceTitle3'] ?? "",
           sliceTitle4: state.uri.queryParameters['sliceTitle4'] ?? "",
           sliceTitle5: state.uri.queryParameters['sliceTitle5'] ?? "",
-          pointList: [],
+          pointList: const [],
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return myTransition(child, animation);
@@ -103,7 +103,7 @@ final GoRouter router =
       return CustomTransitionPage(
         key: state.pageKey,
         name: state.name,
-        child: Register(),
+        child: const Register(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return myTransition(child, animation);
         },
@@ -118,7 +118,7 @@ final GoRouter router =
       return CustomTransitionPage(
         key: state.pageKey,
         name: state.name,
-        child: ForgetPasswordPage(),
+        child: const ForgetPasswordPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return myTransition(child, animation);
         },
@@ -133,7 +133,7 @@ final GoRouter router =
       return CustomTransitionPage(
         key: state.pageKey,
         name: state.name,
-        child: EditProgram(),
+        child: const EditProgram(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return myTransition(child, animation);
         },
@@ -154,7 +154,7 @@ final GoRouter router =
               return CustomTransitionPage(
                 key: state.pageKey,
                 name: state.name,
-                child: Home(),
+                child: const Home(),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   return myTransition(child, animation);
                 },
@@ -170,7 +170,7 @@ final GoRouter router =
               return CustomTransitionPage(
                 key: state.pageKey,
                 name: state.name,
-                child: Explore(),
+                child: const Explore(),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   return myTransition(child, animation);
                 },
