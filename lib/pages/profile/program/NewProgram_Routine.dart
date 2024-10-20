@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import '../../../Widgets/custom_snackbar.dart';
-import '../../../utils/AppColor.dart';
+import '../../../constants/AppColor.dart';
 import '../../../utils/request.dart';
 import '../../../model/ProgramModel.dart';
 import '../../../provider/programProvider.dart';

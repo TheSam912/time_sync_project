@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../Widgets/Second_template.dart';
 import '../../repository/programRepository.dart';
-import '../../utils/AppColor.dart';
+import '../../constants/AppColor.dart';
 
 class Category extends ConsumerStatefulWidget {
   Category({super.key, required this.category});

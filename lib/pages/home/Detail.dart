@@ -10,7 +10,7 @@ import '../../model/ProgramModel.dart';
 import '../../provider/usersProvider.dart';
 import '../../repository/programRepository.dart';
 import '../../repository/usersRepository.dart';
-import '../../utils/AppColor.dart';
+import '../../constants/AppColor.dart';
 
 class Detail extends ConsumerStatefulWidget {
   Detail({required this.Id});

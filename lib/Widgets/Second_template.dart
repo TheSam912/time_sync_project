@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../utils/AppColor.dart';
+import '../constants/AppColor.dart';
 
 class SecondTemplate extends StatefulWidget {
   SecondTemplate({
@@ -60,7 +60,7 @@ class _SecondTemplateState extends State<SecondTemplate> {
                   height: 200,
                   width: size.width,
                   decoration: BoxDecoration(
-                      boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)],
+                      boxShadow: [const BoxShadow(color: Colors.grey, blurRadius: 10)],
                       borderRadius: BorderRadius.circular(14),
                       color: AppColors.mainItemColor),
                   child: Column(
@@ -70,7 +70,7 @@ class _SecondTemplateState extends State<SecondTemplate> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Container(
-                          margin: EdgeInsets.only(right: 40),
+                          margin: const EdgeInsets.only(right: 40),
                           child: Text(
                             widget.title,
                             style: GoogleFonts.nunito(
@@ -79,8 +79,8 @@ class _SecondTemplateState extends State<SecondTemplate> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        margin: EdgeInsets.only(right: 50, top: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        margin: const EdgeInsets.only(right: 50, top: 5),
                         child: Text(
                           widget.description,
                           textAlign: TextAlign.justify,
@@ -103,7 +103,7 @@ class _SecondTemplateState extends State<SecondTemplate> {
                 child: Container(
                   width: 110,
                   height: 110,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColors.mainItemColor,
                       boxShadow: [BoxShadow(color: Colors.white, blurRadius: 3)]),

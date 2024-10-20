@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import '../../Widgets/HomePage_Widgets.dart';
 import 'auth/Login.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';
@@ -14,8 +15,8 @@ import '../../model/UserModel.dart';
 import '../../provider/usersProvider.dart';
 import '../../repository/programRepository.dart';
 import '../../repository/usersRepository.dart';
-import '../../utils/AppColor.dart';
-import '../../utils/auth_service.dart';
+import '../../constants/AppColor.dart';
+import 'auth/services/auth_service.dart';
 
 class Profile extends ConsumerStatefulWidget {
   Profile({super.key, required this.selectedProgram});
@@ -38,13 +39,11 @@ class _ProfileState extends ConsumerState<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var checkUser = ref.read(userInformation).username;
-    var now = DateTime.now();
-    titleDate = DateFormat.yMMMEd().format(now);
+    titleDate = DateFormat.yMMMEd().format(DateTime.now());
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.backgroundColor,
-        appBar: profileCustomAppbar(checkUser),
+        appBar: appBarSection(titleDate, context),
         body: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
@@ -52,7 +51,7 @@ class _ProfileState extends ConsumerState<Profile> {
                 handleRequest();
                 return profileDesign();
               }
-              return Login();
+              return const Login();
             }));
   }
 
@@ -108,74 +107,11 @@ class _ProfileState extends ConsumerState<Profile> {
     }
   }
 
-  profileCustomAppbar(checkUser) {
-    return checkUser != null
-        ? PreferredSize(
-            preferredSize: Size(double.infinity, 60),
-            child: Container(
-              color: AppColors.mainItemColor,
-              alignment: Alignment.bottomCenter,
-              padding: EdgeInsets.symmetric(horizontal: 14),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    titleDate,
-                    style: GoogleFonts.nunito(
-                        color: AppColors.backgroundColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          barrierColor: Colors.amber.withOpacity(0.7),
-                          builder: (context) {
-                            return Container(
-                              color: AppColors.mainItemColor,
-                              child: ListView(
-                                shrinkWrap: true,
-                                physics: ClampingScrollPhysics(),
-                                children: [
-                                  listTileItems(
-                                      "User: ${FirebaseAuth.instance.currentUser?.email.toString()}",
-                                      Icons.person_3_outlined,
-                                      () {},
-                                      false),
-                                  listTileItems(
-                                      "LOGOUT", Icons.logout_outlined, () => voidForLogOut(), true),
-                                  listTileItems("Privacy And Policy", Icons.privacy_tip_outlined,
-                                      () {}, true),
-                                  listTileItems("Rate Us", Icons.star_rate_outlined, () {}, true),
-                                  listTileItems(
-                                      "Contact Us", Icons.contact_support_outlined, () {}, true),
-                                  listTileItems("Fallow Us", Icons.support, () {}, true),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      icon: Icon(
-                        Icons.settings,
-                        color: AppColors.backgroundColor,
-                      )),
-                ],
-              ),
-            ))
-        : PreferredSize(
-            preferredSize: Size(double.infinity, 0),
-            child: Container(
-              color: AppColors.mainItemColor,
-            ));
-  }
-
   profileDesign() {
     return loading == false
         ? ListView(
             shrinkWrap: true,
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             children: [
               SizedBox(
                   height: 120,
@@ -183,8 +119,9 @@ class _ProfileState extends ConsumerState<Profile> {
                     children: [
                       havePlan
                           ? Container(
-                              padding: EdgeInsets.only(bottom: 20, left: 14.0, top: 20, right: 30),
-                              decoration: BoxDecoration(
+                              padding:
+                                  const EdgeInsets.only(bottom: 20, left: 14.0, top: 20, right: 30),
+                              decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.only(bottomRight: Radius.circular(100)),
                                   color: AppColors.mainItemColor),
@@ -201,8 +138,8 @@ class _ProfileState extends ConsumerState<Profile> {
                                             fontSize: 22),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.only(left: 8),
-                                        padding: EdgeInsets.symmetric(horizontal: 8),
+                                        margin: const EdgeInsets.only(left: 8),
+                                        padding: const EdgeInsets.symmetric(horizontal: 8),
                                         decoration: BoxDecoration(
                                             color: Colors.amber,
                                             borderRadius: BorderRadius.circular(5)),
@@ -232,16 +169,16 @@ class _ProfileState extends ConsumerState<Profile> {
                                 ],
                               ),
                             )
-                          : Center(),
+                          : const Center(),
                       havePlan
                           ? Positioned(
                               right: 15,
                               top: 0,
                               bottom: -60,
                               child: Container(
-                                padding: EdgeInsets.all(4),
-                                decoration:
-                                    BoxDecoration(color: Colors.amber, shape: BoxShape.circle),
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                    color: Colors.amber, shape: BoxShape.circle),
                                 child: IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
@@ -266,7 +203,7 @@ class _ProfileState extends ConsumerState<Profile> {
                                                       barrierColor: AppColors.mainItemColor,
                                                       isScrollControlled: true,
                                                       enableDrag: false,
-                                                      constraints: BoxConstraints.expand(),
+                                                      constraints: const BoxConstraints.expand(),
                                                       builder: (context) {
                                                         // return editProgramBottomSheet(
                                                         //     context, programResponse);
@@ -278,8 +215,9 @@ class _ProfileState extends ConsumerState<Profile> {
                                                   child: Container(
                                                     width: MediaQuery.of(context).size.width - 50,
                                                     alignment: Alignment.center,
-                                                    padding: EdgeInsets.symmetric(vertical: 12),
-                                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(vertical: 12),
+                                                    margin: const EdgeInsets.symmetric(vertical: 8),
                                                     decoration: BoxDecoration(
                                                         color: AppColors.backgroundColor,
                                                         borderRadius: BorderRadius.circular(12)),
@@ -298,8 +236,9 @@ class _ProfileState extends ConsumerState<Profile> {
                                                   child: Container(
                                                     width: MediaQuery.of(context).size.width - 50,
                                                     alignment: Alignment.center,
-                                                    padding: EdgeInsets.symmetric(vertical: 12),
-                                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(vertical: 12),
+                                                    margin: const EdgeInsets.symmetric(vertical: 8),
                                                     decoration: BoxDecoration(
                                                         color: Colors.red,
                                                         borderRadius: BorderRadius.circular(12)),
@@ -319,19 +258,19 @@ class _ProfileState extends ConsumerState<Profile> {
                                     },
                                     color: Colors.amber,
                                     highlightColor: Colors.transparent,
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.more_vert_outlined,
                                       color: AppColors.mainItemColor,
                                     )),
                               ),
                             )
-                          : Center()
+                          : const Center()
                     ],
                   )),
               havePlan ? roadMapSection() : showEmptyDesign()
             ],
           )
-        : Center(
+        : const Center(
             child: CircularProgressIndicator(
             color: AppColors.mainItemColor,
           ));
@@ -347,7 +286,7 @@ class _ProfileState extends ConsumerState<Profile> {
     // );
   }
 
-  void voidForLogOut() {
+  void logoutDialog() {
     Navigator.pop(context);
     showDialog(
       context: context,
@@ -359,7 +298,7 @@ class _ProfileState extends ConsumerState<Profile> {
             style: GoogleFonts.nunito(
                 color: AppColors.backgroundColor, fontSize: 18, fontWeight: FontWeight.w600),
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.warning,
             color: Colors.amber,
           ),
@@ -405,7 +344,7 @@ class _ProfileState extends ConsumerState<Profile> {
             style: GoogleFonts.nunito(
                 color: AppColors.backgroundColor, fontSize: 18, fontWeight: FontWeight.w600),
           ),
-          icon: Icon(
+          icon: const Icon(
             Icons.warning,
             color: Colors.amber,
           ),
@@ -458,7 +397,7 @@ class _ProfileState extends ConsumerState<Profile> {
                 size: 18,
                 color: AppColors.backgroundColor,
               )
-            : Icon(
+            : const Icon(
                 Icons.person,
                 color: AppColors.mainItemColor,
               ),
@@ -472,7 +411,7 @@ class _ProfileState extends ConsumerState<Profile> {
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: programResponse?.routineItems?.length,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             return Stack(
               children: [
@@ -484,15 +423,17 @@ class _ProfileState extends ConsumerState<Profile> {
                       margin: const EdgeInsets.only(left: 25, bottom: 10, right: 12, top: 8),
                       decoration: BoxDecoration(
                           color: AppColors.backgroundColor,
-                          boxShadow: [BoxShadow(color: AppColors.mainItemColor, blurRadius: 8)],
+                          boxShadow: const [
+                            BoxShadow(color: AppColors.mainItemColor, blurRadius: 8)
+                          ],
                           borderRadius: BorderRadius.circular(14)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              decoration: const BoxDecoration(
                                   color: Colors.amber,
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(14), topLeft: Radius.circular(14))),
@@ -510,12 +451,12 @@ class _ProfileState extends ConsumerState<Profile> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.timer_outlined,
                                         size: 16,
                                         color: AppColors.mainItemColor,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(

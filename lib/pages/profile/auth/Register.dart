@@ -10,8 +10,8 @@ import '../../../Widgets/custom_snackbar.dart';
 import '../../../model/UserModel.dart';
 import '../../../provider/usersProvider.dart';
 import '../../../repository/usersRepository.dart';
-import '../../../utils/AppColor.dart';
-import '../../../utils/auth_service.dart';
+import '../../../constants/AppColor.dart';
+import 'services/auth_service.dart';
 
 class Register extends ConsumerStatefulWidget {
   const Register({super.key});

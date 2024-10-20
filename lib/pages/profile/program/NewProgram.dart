@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Widgets/custom_snackbar.dart';
 import '../../../provider/sliderProvider.dart';
-import '../../../utils/AppColor.dart';
+import '../../../constants/AppColor.dart';
 import '../../../repository/homeRepository.dart';
 
 class Newprogram extends ConsumerStatefulWidget {

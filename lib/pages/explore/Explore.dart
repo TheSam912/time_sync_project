@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../repository/homeRepository.dart';
-import '../../utils/AppColor.dart';
+import '../../constants/AppColor.dart';
 
 class Explore extends ConsumerStatefulWidget {
   const Explore({Key? key}) : super(key: key);
@@ -20,14 +20,8 @@ class _ExploreState extends ConsumerState<Explore> {
   List categoryList = [];
   bool loading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _handleRequest();
-  }
-
   Future<void> _handleRequest() async {
-    var categoryResponse = ref.read(categoryPageRequests);
+    var categoryResponse = ref.watch(categoryPageRequests);
     categoryResponse.when(
       data: (data) {
         setState(() {
@@ -51,12 +45,15 @@ class _ExploreState extends ConsumerState<Explore> {
   @override
   Widget build(BuildContext context) {
     titleDate = DateFormat.yMMMEd().format(DateTime.now());
-
+    _handleRequest();
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: appBarSection(titleDate, context),
       body: loading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: AppColors.mainItemColor,
+            ))
           : ListView(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),

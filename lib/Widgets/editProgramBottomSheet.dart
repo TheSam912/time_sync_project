@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../model/ProgramModel.dart';
-import '../utils/AppColor.dart';
+import '../constants/AppColor.dart';
 
 Duration _duration = Duration(hours: 0, minutes: 0);
 

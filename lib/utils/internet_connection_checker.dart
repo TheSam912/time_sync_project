@@ -8,7 +8,7 @@ import 'dart:async';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/AppColor.dart';
+import '../constants/AppColor.dart';
 
 Future execute(InternetConnectionChecker internetConnectionChecker, BuildContext context) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();

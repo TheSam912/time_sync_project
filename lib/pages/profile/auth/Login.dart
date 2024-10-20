@@ -8,8 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../Widgets/custom_snackbar.dart';
-import '../../../utils/AppColor.dart';
-import '../../../utils/auth_service.dart';
+import '../../../constants/AppColor.dart';
+import 'services/auth_service.dart';
 
 class Login extends ConsumerStatefulWidget {
   const Login({super.key});

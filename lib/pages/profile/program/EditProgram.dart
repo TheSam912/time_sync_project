@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../provider/usersProvider.dart';
-import '../../../utils/AppColor.dart';
+import '../../../constants/AppColor.dart';
 
 class EditProgram extends ConsumerStatefulWidget {
   const EditProgram({super.key});

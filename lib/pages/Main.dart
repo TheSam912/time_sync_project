@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import '../utils/AppColor.dart';
+import '../constants/AppColor.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key, required this.navigationShell});
