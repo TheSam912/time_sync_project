@@ -35,8 +35,16 @@ class MainPage extends StatelessWidget {
               label: ''),
           BottomNavigationBarItem(
               icon: Image.asset(
-                "assets/icons/user.png",
+                "assets/icons/calendar.png",
                 color: navigationShell.currentIndex == 2 ? Colors.amber : Colors.grey.shade700,
+                width: 25,
+                height: 25,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Image.asset(
+                "assets/icons/user.png",
+                color: navigationShell.currentIndex == 3 ? Colors.amber : Colors.grey.shade700,
                 width: 25,
                 height: 25,
               ),

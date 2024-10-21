@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_sync/pages/today/today.dart';
 import '../pages/explore/Category.dart';
 import '../pages/home/Detail.dart';
 import '../pages/profile/program/EditProgram.dart';
@@ -15,6 +16,7 @@ import '../pages/profile/program/NewProgram_Routine.dart';
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
 final _shellNavigatorExploreKey = GlobalKey<NavigatorState>(debugLabel: 'shellExplore');
+final _shellNavigatorTodayKey = GlobalKey<NavigatorState>(debugLabel: 'shellToday');
 final _shellNavigatorProfileKey = GlobalKey<NavigatorState>(debugLabel: 'shellProfile');
 
 Widget myTransition(child, animation) {
@@ -171,6 +173,22 @@ final GoRouter router =
                 key: state.pageKey,
                 name: state.name,
                 child: const Explore(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return myTransition(child, animation);
+                },
+              );
+            },
+          )
+        ]),
+        StatefulShellBranch(navigatorKey: _shellNavigatorTodayKey, routes: [
+          GoRoute(
+            path: '/today',
+            name: 'today',
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                key: state.pageKey,
+                name: state.name,
+                child: const Today(),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   return myTransition(child, animation);
                 },
