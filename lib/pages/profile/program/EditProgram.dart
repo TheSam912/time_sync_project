@@ -22,7 +22,6 @@ class _EditProgramState extends ConsumerState<EditProgram> {
 
   @override
   Widget build(BuildContext context) {
-    var user = ref.watch(userInformation);
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: PreferredSize(

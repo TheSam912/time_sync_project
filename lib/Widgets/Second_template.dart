@@ -60,7 +60,7 @@ class _SecondTemplateState extends State<SecondTemplate> {
                   height: 200,
                   width: size.width,
                   decoration: BoxDecoration(
-                      boxShadow: [const BoxShadow(color: Colors.grey, blurRadius: 10)],
+                      boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 10)],
                       borderRadius: BorderRadius.circular(14),
                       color: AppColors.mainItemColor),
                   child: Column(

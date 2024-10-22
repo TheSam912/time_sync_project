@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../constants/AppColor.dart';
+import '../routes/route.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends ConsumerWidget {
   const MainPage({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final indexBottomNavbar = ref.watch(indexBottomNavbarProvider);
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
@@ -20,7 +23,7 @@ class MainPage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 "assets/icons/home.svg",
-                color: navigationShell.currentIndex == 0 ? Colors.amber : Colors.grey.shade700,
+                color: indexBottomNavbar == 0 ? Colors.amber : Colors.grey.shade700,
                 width: 28,
                 height: 28,
               ),
@@ -28,7 +31,7 @@ class MainPage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 "assets/icons/explore.svg",
-                color: navigationShell.currentIndex == 1 ? Colors.amber : Colors.grey.shade700,
+                color: indexBottomNavbar == 1 ? Colors.amber : Colors.grey.shade700,
                 width: 28,
                 height: 28,
               ),
@@ -36,27 +39,28 @@ class MainPage extends StatelessWidget {
           BottomNavigationBarItem(
               icon: Image.asset(
                 "assets/icons/calendar.png",
-                color: navigationShell.currentIndex == 2 ? Colors.amber : Colors.grey.shade700,
+                color: indexBottomNavbar == 2 ? Colors.amber : Colors.grey.shade700,
                 width: 25,
                 height: 25,
               ),
               label: ''),
           BottomNavigationBarItem(
               icon: Image.asset(
-                "assets/icons/user.png",
-                color: navigationShell.currentIndex == 3 ? Colors.amber : Colors.grey.shade700,
-                width: 25,
-                height: 25,
+                "assets/icons/ai.png",
+                color: indexBottomNavbar == 3 ? Colors.amber : Colors.grey.shade700,
+                width: 28,
+                height: 28,
               ),
               label: ''),
         ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
+        currentIndex: indexBottomNavbar,
+        onTap: (int index) => _onTap(context, index, ref),
       ),
     );
   }
 
-  void _onTap(BuildContext context, int index) {
+  void _onTap(BuildContext context, int index, ref) {
+    ref.read(indexBottomNavbarProvider.notifier).update((state) => index);
     navigationShell.goBranch(
       index,
       initialLocation: index == navigationShell.currentIndex,

@@ -421,7 +421,6 @@ bottomSheetButtons(context, String text, bool cancel, i) {
               Navigator.pop(context);
             } else {
               String updatedTitle = titleController.text;
-              String updatedDescription = descriptionController.text;
               if (updatedTitle != "") {
                 ref.watch(userProgramProvider.notifier).update(
                   (state) {

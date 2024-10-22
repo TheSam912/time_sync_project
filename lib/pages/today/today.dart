@@ -18,7 +18,9 @@ import '../profile/auth/Login.dart';
 import '../profile/auth/services/auth_service.dart';
 
 class Today extends ConsumerStatefulWidget {
-  const Today({super.key});
+  Today({super.key, required this.selectedProgram});
+
+  String selectedProgram;
 
   @override
   ConsumerState<Today> createState() => _TodayState();
@@ -53,29 +55,28 @@ class _TodayState extends ConsumerState<Today> {
   }
 
   handleRequest() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var user = ref.watch(userInformation);
-      if (user.program != "") {
-        programResponse = await ref.read(programRepositoryProvider).getOneProgram(user.program);
-        if (programResponse != null) {
-          ref.watch(userProgramProvider.notifier).update(
-            (state) {
-              state = programResponse;
-              return state;
-            },
-          );
-          setState(() {
-            loading = false;
-            havePlan = true;
-          });
-        }
-      } else {
+    var user = ref.watch(userInformation);
+    if (user.program != "") {
+      programResponse = await ref.read(programRepositoryProvider).getOneProgram(user.program);
+      if (programResponse != null) {
+        if (!mounted) return;
+        ref.watch(userProgramProvider.notifier).update(
+          (state) {
+            state = programResponse;
+            return state;
+          },
+        );
         setState(() {
           loading = false;
-          havePlan = false;
+          havePlan = true;
         });
       }
-    });
+    } else {
+      setState(() {
+        loading = false;
+        havePlan = false;
+      });
+    }
   }
 
   logOut() {

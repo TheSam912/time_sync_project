@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:time_sync/pages/today/today.dart';
 import '../pages/explore/Category.dart';
@@ -22,6 +23,10 @@ final _shellNavigatorProfileKey = GlobalKey<NavigatorState>(debugLabel: 'shellPr
 Widget myTransition(child, animation) {
   return FadeTransition(opacity: CurveTween(curve: Curves.easeIn).animate(animation), child: child);
 }
+
+final indexBottomNavbarProvider = StateProvider<int>((ref) {
+  return 0;
+});
 
 final GoRouter router =
     GoRouter(navigatorKey: _rootNavigatorKey, initialLocation: '/home', routes: <RouteBase>[
@@ -188,7 +193,9 @@ final GoRouter router =
               return CustomTransitionPage(
                 key: state.pageKey,
                 name: state.name,
-                child: const Today(),
+                child: Today(
+                  selectedProgram: state.uri.queryParameters['selectedProgram'] ?? "",
+                ),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   return myTransition(child, animation);
                 },
@@ -204,9 +211,7 @@ final GoRouter router =
               return CustomTransitionPage(
                 key: state.pageKey,
                 name: state.name,
-                child: Profile(
-                  selectedProgram: state.uri.queryParameters['selectedProgram'] ?? "",
-                ),
+                child: Profile(),
                 transitionsBuilder: (context, animation, secondaryAnimation, child) {
                   return myTransition(child, animation);
                 },

@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:time_sync/routes/route.dart';
 import '../../Widgets/Second_template.dart';
 import '../../model/UserModel.dart';
 import '../../provider/usersProvider.dart';
@@ -135,6 +137,22 @@ class _HomeState extends ConsumerState<Home> {
       children: [
         homePageTop(),
         _categorySection(),
+        Container(
+          height: 100,
+          decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(16)),
+          margin: const EdgeInsets.all(12),
+          child: TextButton(
+              onPressed: () {
+                context.pushNamed("profile");
+                ref.watch(indexBottomNavbarProvider.notifier).update(
+                  (state) {
+                    state = 3;
+                    return state;
+                  },
+                );
+              },
+              child: const Text("NAVIGATE")),
+        ),
         _programsSection(),
       ],
     );
