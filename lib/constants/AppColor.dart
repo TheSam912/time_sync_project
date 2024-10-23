@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   static Color backgroundColor = Colors.grey.shade300;
   static const Color mainItemColor = Color(0xff1f1f1f);
+  static Color unselectedItemColor = Colors.grey.shade400;
 
   static const Color primary = contentColorCyan;
   static const Color menuBackground = Color(0xFF090912);
