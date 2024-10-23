@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:time_sync/Widgets/loading.dart';
 import '../../Widgets/Indicator.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../model/ProgramModel.dart';
@@ -138,11 +139,7 @@ class _DetailState extends ConsumerState<Detail> {
                               )
                             ],
                     )
-                  : Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.mainItemColor,
-                      ),
-                    ),
+                  : TimeSyncLoading(),
             );
           },
         ));

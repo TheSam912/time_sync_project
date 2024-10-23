@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:time_sync/Widgets/loading.dart';
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';
@@ -268,10 +269,7 @@ class _TodayState extends ConsumerState<Today> {
               havePlan ? roadMapSection() : showEmptyDesign()
             ],
           )
-        : const Center(
-            child: CircularProgressIndicator(
-            color: AppColors.mainItemColor,
-          ));
+        : TimeSyncLoading();
     // floatingActionButton: FloatingActionButton(
     // backgroundColor: AppColors.mainItemColor,
     // child: Icon(

@@ -25,7 +25,7 @@ class _EditProgramState extends ConsumerState<EditProgram> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: PreferredSize(
-          preferredSize: Size(double.infinity, 70),
+          preferredSize: const Size(double.infinity, 70),
           child: Container(
             color: AppColors.mainItemColor,
             alignment: Alignment.bottomCenter,
@@ -34,7 +34,7 @@ class _EditProgramState extends ConsumerState<EditProgram> {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.close,
                     color: AppColors.mainItemColor,
                   ),
@@ -58,11 +58,11 @@ class _EditProgramState extends ConsumerState<EditProgram> {
           )),
       body: ListView(
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           Container(
             height: 30,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: AppColors.mainItemColor,
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(100),

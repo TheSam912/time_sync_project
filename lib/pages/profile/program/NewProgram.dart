@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:time_sync/Widgets/loading.dart';
+import 'package:time_sync/Widgets/loading.dart';
 import '../../../Widgets/custom_snackbar.dart';
 import '../../../provider/sliderProvider.dart';
 import '../../../constants/AppColor.dart';
@@ -64,11 +66,11 @@ class _NewprogramState extends ConsumerState<Newprogram> {
       },
       error: (error, stackTrace) {
         loading = true;
-        return Center(child: CircularProgressIndicator());
+        return TimeSyncLoading();
       },
       loading: () {
         loading = true;
-        return Center(child: CircularProgressIndicator());
+        return TimeSyncLoading();
       },
     );
   }
@@ -94,20 +96,20 @@ class _NewprogramState extends ConsumerState<Newprogram> {
         ),
       ),
       body: ListView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           inputWidget("Title", titleController, false),
           inputWidget("Description", descriptionController, false),
           categoryDialog(),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 18),
-            margin: EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            margin: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
                 color: AppColors.mainItemColor, borderRadius: BorderRadius.circular(12)),
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 12, top: 8),
+                  margin: const EdgeInsets.only(left: 12, top: 8),
                   child: Row(
                     children: [
                       Expanded(
@@ -118,19 +120,19 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                             secondItem
                                 ? sliceValueInput(
                                     AppColors.pieColor2, sliceTitle2, sliderValue2.toString(), 2)
-                                : Center(),
+                                : const Center(),
                             thirdItem
                                 ? sliceValueInput(
                                     AppColors.pieColor3, sliceTitle3, sliderValue3.toString(), 3)
-                                : Center(),
+                                : const Center(),
                             forthItem
                                 ? sliceValueInput(
                                     AppColors.pieColor4, sliceTitle4, sliderValue4.toString(), 4)
-                                : Center(),
+                                : const Center(),
                             fifthItem
                                 ? sliceValueInput(
                                     AppColors.pieColor5, sliceTitle5, sliderValue5.toString(), 5)
-                                : Center(),
+                                : const Center(),
                           ],
                         ),
                       ),
@@ -177,7 +179,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                       }
                                     },
                                   )
-                                : Center(),
+                                : const Center(),
                             thirdItem
                                 ? Slider(
                                     value: sliderValue3 ?? 1,
@@ -203,7 +205,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                       }
                                     },
                                   )
-                                : Center(),
+                                : const Center(),
                             forthItem
                                 ? Slider(
                                     value: sliderValue4 ?? 1,
@@ -229,7 +231,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                       }
                                     },
                                   )
-                                : Center(),
+                                : const Center(),
                             fifthItem
                                 ? Slider(
                                     value: sliderValue5 ?? 1,
@@ -255,7 +257,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                       }
                                     },
                                   )
-                                : Center(),
+                                : const Center(),
                           ],
                         ),
                       ),
@@ -265,9 +267,9 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                 if (fifthItem == false)
                   Container(
                     height: 50,
-                    margin: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                    margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                     decoration: BoxDecoration(
-                      color: Color(0xff303030),
+                      color: const Color(0xff303030),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     alignment: Alignment.center,
@@ -283,14 +285,14 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                             else if (fifthItem != true) fifthItem = true;
                           });
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add,
                           color: Colors.amber,
                         )),
                   )
                 else
-                  Center(),
-                SizedBox(
+                  const Center(),
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -316,7 +318,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],
@@ -326,7 +328,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
           SizedBox(
             child: ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: pointList?.length,
               itemBuilder: (context, index) {
                 return Padding(
@@ -350,7 +352,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                   fontWeight: FontWeight.w500),
                             ),
                             onPressed: null,
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.control_point,
                               color: AppColors.mainItemColor,
                             ),
@@ -365,7 +367,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                 pointList?.removeAt(index);
                               });
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.delete_outline_outlined,
                               color: Colors.red,
                             )),
@@ -394,8 +396,8 @@ class _NewprogramState extends ConsumerState<Newprogram> {
             },
             child: Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.only(top: 50, left: 14, right: 14),
-              padding: EdgeInsets.symmetric(vertical: 16),
+              margin: const EdgeInsets.only(top: 50, left: 14, right: 14),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: AppColors.mainItemColor,
@@ -415,7 +417,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
   sliceValueInput(color, value, percent, index) {
     return Container(
       height: 43,
-      margin: EdgeInsets.symmetric(vertical: 3),
+      margin: const EdgeInsets.symmetric(vertical: 3),
       alignment: Alignment.center,
       child: Row(
         children: [
@@ -423,7 +425,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
             child: Container(
               padding: const EdgeInsets.only(left: 12, bottom: 8),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(12), bottomLeft: Radius.circular(12)),
                   color: AppColors.backgroundColor),
               child: TextField(
@@ -478,7 +480,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 color: color,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(10), bottomRight: Radius.circular(10))),
             child: Text(
               percent != "0.0" ? "${percent.toString().split(".")[0]}0 %" : "0",
@@ -504,12 +506,12 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                   ? ListView.builder(
                       itemCount: categoryList.length,
                       shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 8),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(color: AppColors.backgroundColor, width: 0.5)),
@@ -520,7 +522,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                                     Navigator.pop(context);
                                   });
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.category,
                                   size: 20,
                                   color: Colors.amber,
@@ -534,20 +536,14 @@ class _NewprogramState extends ConsumerState<Newprogram> {
                         );
                       },
                     )
-                  : SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircularProgressIndicator(
-                        color: AppColors.backgroundColor,
-                      ),
-                    ),
+                  : SizedBox(height: 50, width: 50, child: TimeSyncLoading()),
             );
           },
         );
       },
       child: Container(
-        margin: EdgeInsets.all(12),
-        padding: EdgeInsets.symmetric(vertical: 22, horizontal: 12),
+        margin: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 12),
         decoration: BoxDecoration(
             border: Border.all(color: AppColors.mainItemColor),
             borderRadius: BorderRadius.circular(12),
@@ -565,8 +561,8 @@ class _NewprogramState extends ConsumerState<Newprogram> {
 
   inputWidget(hint, controller, isPoint) {
     return Container(
-      margin: EdgeInsets.all(12),
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      margin: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.mainItemColor),
           borderRadius: BorderRadius.circular(12),

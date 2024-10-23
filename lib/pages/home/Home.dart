@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:time_sync/Widgets/loading.dart';
 import 'package:time_sync/routes/route.dart';
 import '../../Widgets/Second_template.dart';
 import '../../model/UserModel.dart';
@@ -98,11 +99,7 @@ class _HomeState extends ConsumerState<Home> {
       backgroundColor: AppColors.backgroundColor,
       appBar: appBarSection(titleDate, context),
       body: isLoading
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.mainItemColor,
-              ),
-            )
+          ? TimeSyncLoading()
           : StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
@@ -120,13 +117,7 @@ class _HomeState extends ConsumerState<Home> {
     return Consumer(
       builder: (context, ref, child) {
         ref.watch(userInformation);
-        return isLoading
-            ? const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.mainItemColor,
-                ),
-              )
-            : homeDesign();
+        return isLoading ? TimeSyncLoading() : homeDesign();
       },
     );
   }

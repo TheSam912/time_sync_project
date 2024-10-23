@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../Widgets/HomePage_Widgets.dart';
+import '../../Widgets/loading.dart';
 import '../../repository/homeRepository.dart';
 import '../../constants/AppColor.dart';
 
@@ -50,10 +51,7 @@ class _ExploreState extends ConsumerState<Explore> {
       backgroundColor: AppColors.backgroundColor,
       appBar: appBarSection(titleDate, context),
       body: loading
-          ? const Center(
-              child: CircularProgressIndicator(
-              color: AppColors.mainItemColor,
-            ))
+          ? TimeSyncLoading()
           : ListView(
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
