@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:time_sync/Widgets/loading.dart';
+import 'package:time_sync/pages/explore/Category.dart';
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';
@@ -52,13 +55,28 @@ class _TodayState extends ConsumerState<Today> {
                 return profileDesign();
               }
               return const Login();
-            }));
+            }),
+        floatingActionButton: havePlan
+            ? null
+            : GestureDetector(
+                onTap: () {
+                  context.replaceNamed("ai");
+                },
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: AppColors.mainItemColor, borderRadius: BorderRadius.circular(20)),
+                  child: Lottie.asset("assets/lottie/ai.json"),
+                ),
+              ));
   }
 
   handleRequest() async {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       var user = ref.watch(userInformation);
-      if (user.program != "" ) {
+      if (user.program != "") {
         programResponse = await ref.read(programRepositoryProvider).getOneProgram(user.program);
         if (programResponse != null) {
           ref.watch(userProgramProvider.notifier).update(
@@ -267,7 +285,7 @@ class _TodayState extends ConsumerState<Today> {
                           : const Center()
                     ],
                   )),
-              havePlan ? roadMapSection() : showEmptyDesign()
+              havePlan ? roadMapSection() : showEmptyDesign(context)
             ],
           )
         : TimeSyncLoading();

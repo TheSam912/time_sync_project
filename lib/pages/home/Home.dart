@@ -82,14 +82,6 @@ class _HomeState extends ConsumerState<Home> {
     });
   }
 
-  // Future<void> _getUserActiveProgram(String? username) async {
-  //   final response = await ref.watch(usersRepositoryProvider).getUser(username);
-  //   if (response != null) {
-  //     final user = UserModel.fromJson(response);
-  //     ref.watch(userInformation.notifier).update((state) => user);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     _fetchHomePageData();
@@ -103,10 +95,6 @@ class _HomeState extends ConsumerState<Home> {
           : StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final userEmail = snapshot.data?.email;
-                  // _getUserActiveProgram(userEmail);
-                }
                 return _buildHomeContent();
               },
             ),

@@ -75,7 +75,7 @@ class _MainPageState extends ConsumerState<MainPage> {
               label: ''),
           BottomNavigationBarItem(
               icon: Image.asset(
-                "assets/icons/ai.png",
+                "assets/icons/user.png",
                 color: indexBottomNavbar == 3 ? Colors.amber : Colors.grey.shade700,
                 width: 28,
                 height: 28,

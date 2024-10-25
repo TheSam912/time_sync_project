@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_sync/pages/today/ai.dart';
 import 'package:time_sync/pages/today/today.dart';
 import '../pages/explore/Category.dart';
 import '../pages/home/Detail.dart';
@@ -142,6 +143,21 @@ final GoRouter router =
         key: state.pageKey,
         name: state.name,
         child: const EditProgram(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return myTransition(child, animation);
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/ai',
+    name: "ai",
+    parentNavigatorKey: _rootNavigatorKey,
+    pageBuilder: (BuildContext context, GoRouterState state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: state.name,
+        child: const ai(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return myTransition(child, animation);
         },
