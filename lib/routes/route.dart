@@ -13,6 +13,7 @@ import '../pages/home/Home.dart';
 import '../pages/Main.dart';
 import '../pages/profile/auth/Register.dart';
 import '../pages/profile/program/NewProgram_Routine.dart';
+import '../provider/usersProvider.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
@@ -29,7 +30,7 @@ final indexBottomNavbarProvider = StateProvider<int>((ref) {
 });
 
 final GoRouter router =
-    GoRouter(navigatorKey: _rootNavigatorKey, initialLocation: '/home', routes: <RouteBase>[
+    GoRouter(navigatorKey: _rootNavigatorKey, initialLocation: "/home", routes: <RouteBase>[
   GoRoute(
     path: '/detail',
     name: "detail",

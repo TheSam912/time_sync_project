@@ -110,7 +110,7 @@ class _DetailState extends ConsumerState<Detail> {
           foregroundColor: AppColors.backgroundColor,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: loading == false ? startButton() : Center(),
+        floatingActionButton: loading == false ? startButton() : const Center(),
         body: Consumer(
           builder: (context, ref, child) {
             ref.watch(userInformation);
@@ -118,7 +118,7 @@ class _DetailState extends ConsumerState<Detail> {
               child: loading == false
                   ? ListView(
                       shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
+                      physics: const ClampingScrollPhysics(),
                       children: selectDetail
                           ? [
                               titleSection(),
@@ -126,7 +126,7 @@ class _DetailState extends ConsumerState<Detail> {
                               textSection(),
                               pirChatSection(),
                               pointsSection(),
-                              SizedBox(
+                              const SizedBox(
                                 height: 100,
                               )
                             ]
@@ -134,7 +134,7 @@ class _DetailState extends ConsumerState<Detail> {
                               titleSection(),
                               tabSection(),
                               roadMapSection(),
-                              SizedBox(
+                              const SizedBox(
                                 height: 100,
                               )
                             ],
@@ -216,8 +216,8 @@ class _DetailState extends ConsumerState<Detail> {
 
   titleSection() {
     return Container(
-      padding: EdgeInsets.only(bottom: 25),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.only(bottom: 25),
+      decoration: const BoxDecoration(
           color: AppColors.mainItemColor,
           boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 12)],
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(200))),
@@ -240,18 +240,18 @@ class _DetailState extends ConsumerState<Detail> {
       height: 240,
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
-      margin: EdgeInsets.all(12),
+      margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: AppColors.mainItemColor,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 12)]),
+          boxShadow: [const BoxShadow(color: Colors.grey, blurRadius: 12)]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
             height: 130,
-            padding: EdgeInsets.only(left: 20),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(left: 20),
+            decoration: const BoxDecoration(
               color: AppColors.mainItemColor,
             ),
             child: Column(
@@ -314,11 +314,11 @@ class _DetailState extends ConsumerState<Detail> {
           Container(
             width: 200,
             height: 200,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.mainItemColor,
             ),
-            margin: EdgeInsets.only(right: 14),
+            margin: const EdgeInsets.only(right: 14),
             child: PieChart(
               PieChartData(
                 startDegreeOffset: randomItem,
@@ -335,8 +335,8 @@ class _DetailState extends ConsumerState<Detail> {
 
   textSection() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-      margin: EdgeInsets.only(left: 2, right: 2),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      margin: const EdgeInsets.only(left: 2, right: 2),
       decoration: BoxDecoration(
         color: AppColors.backgroundColor,
       ),
@@ -357,10 +357,10 @@ class _DetailState extends ConsumerState<Detail> {
   pointsSection() {
     return Container(
       color: AppColors.backgroundColor,
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
       child: ListView.builder(
         itemCount: points.length,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
           return SizedBox(
@@ -373,10 +373,10 @@ class _DetailState extends ConsumerState<Detail> {
                       indent: 10,
                       color: AppColors.mainItemColor.withOpacity(0.2),
                     )
-                  : Center(),
+                  : const Center(),
               TextButton.icon(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.star,
                   color: Colors.orangeAccent,
                   size: 14,
@@ -398,7 +398,7 @@ class _DetailState extends ConsumerState<Detail> {
   tabSection() {
     return Container(
       height: 50,
-      margin: EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 5),
+      margin: const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 5),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: AppColors.mainItemColor, width: 2)),
@@ -416,7 +416,7 @@ class _DetailState extends ConsumerState<Detail> {
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
                     color: selectDetail ? AppColors.mainItemColor : AppColors.backgroundColor),
                 child: Text(
@@ -440,7 +440,7 @@ class _DetailState extends ConsumerState<Detail> {
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
                     color: selectSchedule ? AppColors.mainItemColor : AppColors.backgroundColor),
                 child: Text(
@@ -467,8 +467,9 @@ class _DetailState extends ConsumerState<Detail> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: position == "left"
-                  ? BorderRadius.only(topLeft: Radius.circular(12), bottomLeft: Radius.circular(12))
-                  : BorderRadius.only(
+                  ? const BorderRadius.only(
+                      topLeft: Radius.circular(12), bottomLeft: Radius.circular(12))
+                  : const BorderRadius.only(
                       topRight: Radius.circular(12), bottomRight: Radius.circular(12)),
               color: AppColors.mainItemColor),
           child: Text(
@@ -496,7 +497,7 @@ class _DetailState extends ConsumerState<Detail> {
               builder: (context) {
                 return Container(
                   height: 210,
-                  margin: EdgeInsets.only(top: 50),
+                  margin: const EdgeInsets.only(top: 50),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: AppColors.mainItemColor,
@@ -510,7 +511,7 @@ class _DetailState extends ConsumerState<Detail> {
                             fontSize: 18,
                             fontWeight: FontWeight.w500),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -520,8 +521,8 @@ class _DetailState extends ConsumerState<Detail> {
                             onTap: () => Navigator.pop(context),
                             child: Container(
                               width: 150,
-                              margin: EdgeInsets.only(top: 20),
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                              margin: const EdgeInsets.only(top: 20),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12), color: Colors.red),
                               child: Center(
@@ -535,7 +536,7 @@ class _DetailState extends ConsumerState<Detail> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           GestureDetector(
                             onTap: () {
                               if (user.program == "") {
@@ -556,8 +557,8 @@ class _DetailState extends ConsumerState<Detail> {
                             },
                             child: Container(
                               width: 150,
-                              margin: EdgeInsets.only(top: 20),
-                              padding: EdgeInsets.symmetric(vertical: 12),
+                              margin: const EdgeInsets.only(top: 20),
+                              padding: const EdgeInsets.symmetric(vertical: 12),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12), color: Colors.amber),
                               child: Center(
@@ -582,7 +583,7 @@ class _DetailState extends ConsumerState<Detail> {
           },
           child: Container(
             height: 60,
-            margin: EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
             decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
             child: Center(
               child: Text(
@@ -604,7 +605,7 @@ class _DetailState extends ConsumerState<Detail> {
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: roadMapElements?.length,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             return Stack(
               children: [
@@ -629,12 +630,12 @@ class _DetailState extends ConsumerState<Detail> {
                         children: [
                           Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                               decoration: BoxDecoration(
                                   color: roadMapElements?[i].isDone == false
                                       ? Colors.amber
                                       : Colors.grey.shade500,
-                                  borderRadius: BorderRadius.only(
+                                  borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(14), topLeft: Radius.circular(14))),
                               alignment: Alignment.centerRight,
                               child: Row(
@@ -650,12 +651,12 @@ class _DetailState extends ConsumerState<Detail> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.timer_outlined,
                                         size: 16,
                                         color: AppColors.mainItemColor,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
@@ -759,6 +760,6 @@ class _DetailState extends ConsumerState<Detail> {
                         ],
                       ),
           )
-        : Center();
+        : const Center();
   }
 }

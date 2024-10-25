@@ -56,28 +56,29 @@ class _TodayState extends ConsumerState<Today> {
   }
 
   handleRequest() async {
-    var user = ref.watch(userInformation);
-    if (user.program != "") {
-      programResponse = await ref.read(programRepositoryProvider).getOneProgram(user.program);
-      if (programResponse != null) {
-        if (!mounted) return;
-        ref.watch(userProgramProvider.notifier).update(
-          (state) {
-            state = programResponse;
-            return state;
-          },
-        );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      var user = ref.watch(userInformation);
+      if (user.program != "" ) {
+        programResponse = await ref.read(programRepositoryProvider).getOneProgram(user.program);
+        if (programResponse != null) {
+          ref.watch(userProgramProvider.notifier).update(
+            (state) {
+              state = programResponse;
+              return state;
+            },
+          );
+          setState(() {
+            loading = false;
+            havePlan = true;
+          });
+        }
+      } else {
         setState(() {
           loading = false;
-          havePlan = true;
+          havePlan = false;
         });
       }
-    } else {
-      setState(() {
-        loading = false;
-        havePlan = false;
-      });
-    }
+    });
   }
 
   logOut() {

@@ -35,17 +35,19 @@ class _CategoryState extends ConsumerState<Category> {
   Widget build(BuildContext context) {
     var now = DateTime.now();
     titleDate = DateFormat.yMMMEd().format(now);
-    Future.delayed(
-      Duration.zero,
-      () async {
-        await handleRequest();
-        if (programList.isNotEmpty) {
-          setState(() {
-            loading = false;
-          });
-        }
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      Future.delayed(
+        Duration.zero,
+        () async {
+          await handleRequest();
+          if (programList.isNotEmpty) {
+            setState(() {
+              loading = false;
+            });
+          }
+        },
+      );
+    });
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(

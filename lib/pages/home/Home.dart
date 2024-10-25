@@ -82,13 +82,13 @@ class _HomeState extends ConsumerState<Home> {
     });
   }
 
-  Future<void> _getUserActiveProgram(String? username) async {
-    final response = await ref.watch(usersRepositoryProvider).getUser(username);
-    if (response != null) {
-      final user = UserModel.fromJson(response);
-      ref.watch(userInformation.notifier).update((state) => user);
-    }
-  }
+  // Future<void> _getUserActiveProgram(String? username) async {
+  //   final response = await ref.watch(usersRepositoryProvider).getUser(username);
+  //   if (response != null) {
+  //     final user = UserModel.fromJson(response);
+  //     ref.watch(userInformation.notifier).update((state) => user);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +105,7 @@ class _HomeState extends ConsumerState<Home> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   final userEmail = snapshot.data?.email;
-                  _getUserActiveProgram(userEmail);
+                  // _getUserActiveProgram(userEmail);
                 }
                 return _buildHomeContent();
               },
@@ -128,22 +128,22 @@ class _HomeState extends ConsumerState<Home> {
       children: [
         homePageTop(),
         _categorySection(),
-        Container(
-          height: 100,
-          decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(16)),
-          margin: const EdgeInsets.all(12),
-          child: TextButton(
-              onPressed: () {
-                context.pushNamed("profile");
-                ref.watch(indexBottomNavbarProvider.notifier).update(
-                  (state) {
-                    state = 3;
-                    return state;
-                  },
-                );
-              },
-              child: const Text("NAVIGATE")),
-        ),
+        // Container(
+        //   height: 100,
+        //   decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(16)),
+        //   margin: const EdgeInsets.all(12),
+        //   child: TextButton(
+        //       onPressed: () {
+        //         context.pushNamed("profile");
+        //         ref.watch(indexBottomNavbarProvider.notifier).update(
+        //           (state) {
+        //             state = 3;
+        //             return state;
+        //           },
+        //         );
+        //       },
+        //       child: const Text("NAVIGATE")),
+        // ),
         _programsSection(),
       ],
     );

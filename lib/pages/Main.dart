@@ -1,20 +1,49 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import '../constants/AppColor.dart';
+import '../model/UserModel.dart';
+import '../provider/usersProvider.dart';
+import '../repository/usersRepository.dart';
 import '../routes/route.dart';
 
-class MainPage extends ConsumerWidget {
+class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key, required this.navigationShell});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final indexBottomNavbar = ref.watch(indexBottomNavbarProvider);
+  ConsumerState<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends ConsumerState<MainPage> {
+  var user;
+  bool changed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    user = ref.read(userInformation);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var indexBottomNavbar = ref.watch(indexBottomNavbarProvider);
     return Scaffold(
-      body: navigationShell,
+      // body:widget.navigationShell
+      body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final userEmail = snapshot.data?.email;
+            _getUserActiveProgram(userEmail);
+            return widget.navigationShell;
+          }
+          return widget.navigationShell;
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColors.mainItemColor,
         type: BottomNavigationBarType.fixed,
@@ -59,11 +88,32 @@ class MainPage extends ConsumerWidget {
     );
   }
 
+  Future<void> _getUserActiveProgram(String? username) async {
+    final response = await ref.watch(usersRepositoryProvider).getUser(username);
+    if (response != null) {
+      final userRes = UserModel.fromJson(response);
+      ref.watch(userInformation.notifier).update((state) => userRes);
+      user = ref.watch(userInformation);
+      if (user.program != "") {
+        if (changed == false) {
+          ref.watch(indexBottomNavbarProvider.notifier).update(
+                (state) => 2,
+              );
+          widget.navigationShell.goBranch(
+            2,
+            initialLocation: 2 == widget.navigationShell.currentIndex,
+          );
+          changed = true;
+        }
+      }
+    }
+  }
+
   void _onTap(BuildContext context, int index, ref) {
     ref.read(indexBottomNavbarProvider.notifier).update((state) => index);
-    navigationShell.goBranch(
+    widget.navigationShell.goBranch(
       index,
-      initialLocation: index == navigationShell.currentIndex,
+      initialLocation: index == widget.navigationShell.currentIndex,
     );
   }
 }
