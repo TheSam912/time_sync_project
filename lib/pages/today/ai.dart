@@ -6,8 +6,6 @@ import 'package:time_sync/constants/AppColor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:time_sync/constants/strings.dart';
-import 'package:time_sync/pages/explore/Category.dart';
-import '../../Widgets/HomePage_Widgets.dart';
 
 class ai extends ConsumerStatefulWidget {
   const ai({super.key});

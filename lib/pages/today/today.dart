@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:time_sync/Widgets/loading.dart';
-import 'package:time_sync/pages/explore/Category.dart';
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';

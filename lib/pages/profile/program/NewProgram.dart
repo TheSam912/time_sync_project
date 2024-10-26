@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:time_sync/Widgets/loading.dart';
-import 'package:time_sync/Widgets/loading.dart';
 import '../../../Widgets/custom_snackbar.dart';
 import '../../../provider/sliderProvider.dart';
 import '../../../constants/AppColor.dart';
