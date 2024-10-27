@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../Widgets/custom_snackbar.dart';
 import '../../../constants/AppColor.dart';
 
-import '../../../repository/forget_password.dart';
+import '../../../utils/forget_password.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
   const ForgetPasswordPage({super.key});
