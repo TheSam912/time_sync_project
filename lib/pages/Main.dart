@@ -19,6 +19,7 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class _MainPageState extends ConsumerState<MainPage> {
+  bool fetchedProgram = false;
   var user;
   bool changed = false;
 
@@ -32,13 +33,15 @@ class _MainPageState extends ConsumerState<MainPage> {
   Widget build(BuildContext context) {
     var indexBottomNavbar = ref.watch(indexBottomNavbarProvider);
     return Scaffold(
-      // body:widget.navigationShell
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final userEmail = snapshot.data?.email;
-            _getUserActiveProgram(userEmail);
+            if (!fetchedProgram) {
+              _getUserActiveProgram(userEmail);
+              fetchedProgram = true; // Mark as fetched
+            }
             return widget.navigationShell;
           }
           return widget.navigationShell;
@@ -110,7 +113,7 @@ class _MainPageState extends ConsumerState<MainPage> {
   }
 
   void _onTap(BuildContext context, int index, ref) {
-    ref.read(indexBottomNavbarProvider.notifier).update((state) => index);
+    ref.watch(indexBottomNavbarProvider.notifier).update((state) => index);
     widget.navigationShell.goBranch(
       index,
       initialLocation: index == widget.navigationShell.currentIndex,
