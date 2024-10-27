@@ -106,198 +106,223 @@ class _TodayState extends ConsumerState<Today> {
         );
   }
 
-  removeProgramForUser() async {
-    var user = ref.read(userInformation);
-    var reqMap = {"username": user.username, "program": ""};
-    String dataToSent = jsonEncode(reqMap);
-    var response = await ref.read(usersRepositoryProvider).addProgram(user.Id, dataToSent);
-    if (response != null) {
-      ref.read(userInformation.notifier).update(
-        (state) {
-          state.program = "";
-          return state;
-        },
-      );
-      customSnackBar(context, "It successfully removed !!");
-    } else {
-      customSnackBar(context, "Please Try Again Please!!");
-    }
+  Future<void> removeProgramForUser() async {
+    Future.microtask(() async {
+      var user = ref.read(userInformation);
+      var reqMap = {"username": user.username, "program": ""};
+      String dataToSent = jsonEncode(reqMap);
+      try {
+        var response = await ref.read(usersRepositoryProvider).addProgram(user.Id, dataToSent);
+        if (response != null) {
+          ref.read(userInformation.notifier).update((state) {
+            state.program = "";
+            return state;
+          });
+          customSnackBar(context, "It successfully removed !!");
+        } else {
+          customSnackBar(context, "Please Try Again!!");
+        }
+      } catch (e) {
+        customSnackBar(context, "An error occurred: $e");
+      }
+    });
   }
 
-  profileDesign() {
-    return loading == false
-        ? ListView(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            children: [
-              SizedBox(
-                  height: 120,
-                  child: Stack(
-                    children: [
-                      havePlan
-                          ? Container(
-                              padding:
-                                  const EdgeInsets.only(bottom: 20, left: 14.0, top: 20, right: 30),
-                              decoration: const BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.only(bottomRight: Radius.circular(100)),
-                                  color: AppColors.mainItemColor),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "Your Daily",
-                                        style: GoogleFonts.nunito(
-                                            color: AppColors.backgroundColor,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 22),
-                                      ),
-                                      Container(
-                                        margin: const EdgeInsets.only(left: 8),
-                                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                                        decoration: BoxDecoration(
-                                            color: Colors.amber,
-                                            borderRadius: BorderRadius.circular(5)),
-                                        child: Text(
-                                          "Routine Plan",
-                                          style: GoogleFonts.nunito(
-                                              color: AppColors.mainItemColor,
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 20),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width - 100,
-                                    margin: const EdgeInsets.only(left: 2, top: 8),
-                                    child: Text(
-                                      programResponse?.title ?? "",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.nunito(
-                                          color: AppColors.backgroundColor,
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 20),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : const Center(),
-                      havePlan
-                          ? Positioned(
-                              right: 15,
-                              top: 0,
-                              bottom: -60,
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                    color: Colors.amber, shape: BoxShape.circle),
-                                child: IconButton(
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        backgroundColor: AppColors.mainItemColor,
-                                        barrierColor: Colors.amber.withOpacity(0.8),
-                                        builder: (context) {
-                                          return Container(
-                                            width: MediaQuery.of(context).size.width,
-                                            color: AppColors.mainItemColor,
-                                            height: 150,
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pop(context);
+  // removeProgramForUser() async {
+  //   var user = ref.read(userInformation);
+  //   var reqMap = {"username": user.username, "program": ""};
+  //   String dataToSent = jsonEncode(reqMap);
+  //   var response = await ref.read(usersRepositoryProvider).addProgram(user.Id, dataToSent);
+  //   if (response != null) {
+  //     ref.read(userInformation.notifier).update(
+  //       (state) {
+  //         state.program = "";
+  //         return state;
+  //       },
+  //     );
+  //     customSnackBar(context, "It successfully removed !!");
+  //   } else {
+  //     customSnackBar(context, "Please Try Again Please!!");
+  //   }
+  // }
 
-                                                    showModalBottomSheet(
-                                                      context: context,
-                                                      backgroundColor: AppColors.backgroundColor,
-                                                      barrierColor: AppColors.mainItemColor,
-                                                      isScrollControlled: true,
-                                                      enableDrag: false,
-                                                      constraints: const BoxConstraints.expand(),
-                                                      builder: (context) {
-                                                        // return editProgramBottomSheet(
-                                                        //     context, programResponse);
-                                                        return editProgramBottomSheetUpdate(
-                                                            context, programResponse);
-                                                      },
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    width: MediaQuery.of(context).size.width - 50,
-                                                    alignment: Alignment.center,
-                                                    padding:
-                                                        const EdgeInsets.symmetric(vertical: 12),
-                                                    margin: const EdgeInsets.symmetric(vertical: 8),
-                                                    decoration: BoxDecoration(
-                                                        color: AppColors.backgroundColor,
-                                                        borderRadius: BorderRadius.circular(12)),
-                                                    child: Text(
-                                                      "Edit The Program",
-                                                      style: GoogleFonts.nunito(
-                                                          color: AppColors.mainItemColor,
-                                                          fontWeight: FontWeight.w700),
-                                                    ),
-                                                  ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {
-                                                    voidForDeleteProgram();
-                                                  },
-                                                  child: Container(
-                                                    width: MediaQuery.of(context).size.width - 50,
-                                                    alignment: Alignment.center,
-                                                    padding:
-                                                        const EdgeInsets.symmetric(vertical: 12),
-                                                    margin: const EdgeInsets.symmetric(vertical: 8),
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius: BorderRadius.circular(12)),
-                                                    child: Text(
-                                                      "Delete",
-                                                      style: GoogleFonts.nunito(
-                                                          color: AppColors.backgroundColor,
-                                                          fontWeight: FontWeight.w700),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                    color: Colors.amber,
-                                    highlightColor: Colors.transparent,
-                                    icon: const Icon(
-                                      Icons.more_vert_outlined,
-                                      color: AppColors.mainItemColor,
-                                    )),
+  Widget profileDesign() {
+    if (loading) {
+      return TimeSyncLoading();
+    }
+
+    return ListView(
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      children: [
+        SizedBox(
+          height: 120,
+          child: Stack(
+            children: [
+              if (havePlan)
+                Container(
+                  padding: const EdgeInsets.only(bottom: 20, left: 14.0, top: 20, right: 30),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(100),
+                    ),
+                    color: AppColors.mainItemColor,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "Your Daily",
+                            style: GoogleFonts.nunito(
+                              color: AppColors.backgroundColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 22,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Text(
+                              "Routine Plan",
+                              style: GoogleFonts.nunito(
+                                color: AppColors.mainItemColor,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 20,
                               ),
-                            )
-                          : const Center()
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 100,
+                        margin: const EdgeInsets.only(left: 2, top: 8),
+                        child: Text(
+                          programResponse?.title ?? "",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.nunito(
+                            color: AppColors.backgroundColor,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
                     ],
-                  )),
-              havePlan ? roadMapSection() : showEmptyDesign(context)
+                  ),
+                ),
+              if (havePlan)
+                Positioned(
+                  right: 15,
+                  top: 0,
+                  bottom: -60,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.amber,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        _showBottomSheet(context);
+                      },
+                      color: Colors.amber,
+                      highlightColor: Colors.transparent,
+                      icon: const Icon(
+                        Icons.more_vert_outlined,
+                        color: AppColors.mainItemColor,
+                      ),
+                    ),
+                  ),
+                ),
             ],
-          )
-        : TimeSyncLoading();
-    // floatingActionButton: FloatingActionButton(
-    // backgroundColor: AppColors.mainItemColor,
-    // child: Icon(
-    // Icons.add,
-    // color: AppColors.backgroundColor,
-    // ),
-    // onPressed: () {
-    // context.pushNamed('newprogram');
-    // },
-    // );
+          ),
+        ),
+        havePlan ? roadMapSection() : showEmptyDesign(context),
+      ],
+    );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.mainItemColor,
+      barrierColor: Colors.amber.withOpacity(0.8),
+      builder: (context) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          height: 150,
+          color: AppColors.mainItemColor,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildBottomSheetOption(
+                context: context,
+                text: "Edit The Program",
+                color: AppColors.backgroundColor,
+                onTap: () {
+                  Navigator.pop(context);
+                  _editProgram(context);
+                },
+              ),
+              _buildBottomSheetOption(
+                context: context,
+                text: "Delete",
+                color: Colors.red,
+                onTap: voidForDeleteProgram,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _editProgram(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundColor,
+      barrierColor: AppColors.mainItemColor,
+      isScrollControlled: true,
+      enableDrag: false,
+      constraints: const BoxConstraints.expand(),
+      builder: (context) {
+        return editProgramBottomSheetUpdate(context, programResponse);
+      },
+    );
+  }
+
+  Widget _buildBottomSheetOption({
+    required BuildContext context,
+    required String text,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: MediaQuery.of(context).size.width - 50,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Text(
+          text,
+          style: GoogleFonts.nunito(
+            color: AppColors.mainItemColor,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
   }
 
   void logoutDialog() {
@@ -376,7 +401,7 @@ class _TodayState extends ConsumerState<Today> {
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.amber),
               child: TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     removeProgramForUser();
                     Navigator.pop(context);
                   },
