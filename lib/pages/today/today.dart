@@ -12,13 +12,10 @@ import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';
 import '../../Widgets/showEmptyDesign.dart';
 import '../../model/ProgramModel.dart';
-import '../../model/UserModel.dart';
 import '../../provider/usersProvider.dart';
 import '../../repository/programRepository.dart';
 import '../../repository/usersRepository.dart';
 import '../../constants/AppColor.dart';
-import '../profile/auth/Login.dart';
-import '../profile/auth/services/auth_service.dart';
 
 class Today extends ConsumerStatefulWidget {
   Today({super.key, required this.selectedProgram});
@@ -53,7 +50,7 @@ class _TodayState extends ConsumerState<Today> {
                 handleRequest();
                 return profileDesign();
               }
-              return const Login();
+              return nothingDesign();
             }),
         floatingActionButton: havePlan
             ? null
@@ -98,14 +95,6 @@ class _TodayState extends ConsumerState<Today> {
     });
   }
 
-  logOut() {
-    AuthService authService = AuthService();
-    authService.signOut();
-    ref.watch(userInformation.notifier).update(
-          (state) => state = UserModel(),
-        );
-  }
-
   Future<void> removeProgramForUser() async {
     Future.microtask(() async {
       var user = ref.read(userInformation);
@@ -146,7 +135,25 @@ class _TodayState extends ConsumerState<Today> {
   //   }
   // }
 
-  Widget profileDesign() {
+  nothingDesign() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(child: Lottie.asset("assets/lottie/nothing.json", width: 250, height: 250)),
+        Text(
+          "Please Login To \nYour Account!",
+          textAlign: TextAlign.center,
+          style: GoogleFonts.nunito(
+            color: AppColors.mainItemColor,
+            fontWeight: FontWeight.w700,
+            fontSize: 22,
+          ),
+        )
+      ],
+    );
+  }
+
+  profileDesign() {
     if (loading) {
       return TimeSyncLoading();
     }
@@ -322,52 +329,6 @@ class _TodayState extends ConsumerState<Today> {
           ),
         ),
       ),
-    );
-  }
-
-  void logoutDialog() {
-    Navigator.pop(context);
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: AppColors.mainItemColor,
-          title: Text(
-            "Are you want to logout?",
-            style: GoogleFonts.nunito(
-                color: AppColors.backgroundColor, fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-          icon: const Icon(
-            Icons.warning,
-            color: Colors.amber,
-          ),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  "CANCEL",
-                  style: GoogleFonts.nunito(
-                      color: AppColors.backgroundColor, fontSize: 14, fontWeight: FontWeight.w700),
-                )),
-            Container(
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.amber),
-              child: TextButton(
-                  onPressed: () {
-                    logOut();
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "YES",
-                    style: GoogleFonts.nunito(
-                        color: AppColors.mainItemColor, fontSize: 14, fontWeight: FontWeight.w700),
-                  )),
-            ),
-          ],
-        );
-      },
     );
   }
 

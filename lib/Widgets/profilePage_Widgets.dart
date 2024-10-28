@@ -17,11 +17,11 @@ editProgramBottomSheet(context,ProgramModel program) {
 
       return ListView(
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           Container(
-            padding: EdgeInsets.only(top: 60, bottom: 30),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.only(top: 60, bottom: 30),
+            decoration: const BoxDecoration(
                 color: AppColors.mainItemColor,
                 borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
             child: Row(
@@ -29,7 +29,7 @@ editProgramBottomSheet(context,ProgramModel program) {
               children: [
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.close,
                     color: AppColors.mainItemColor,
                   ),
@@ -57,7 +57,7 @@ editProgramBottomSheet(context,ProgramModel program) {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: programResponse.routineItems?.length,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
                   // return Dismissible(
                   //   confirmDismiss: (direction) async {
@@ -183,15 +183,15 @@ editProgramBottomSheet(context,ProgramModel program) {
                         margin: const EdgeInsets.only(left: 12, bottom: 10, right: 12, top: 8),
                         decoration: BoxDecoration(
                             color: AppColors.backgroundColor,
-                            boxShadow: [BoxShadow(color: AppColors.mainItemColor, blurRadius: 8)],
+                            boxShadow: [const BoxShadow(color: AppColors.mainItemColor, blurRadius: 8)],
                             borderRadius: BorderRadius.circular(14)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
                                 width: double.infinity,
-                                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                                decoration: BoxDecoration(
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                decoration: const BoxDecoration(
                                     color: Colors.amber,
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(14),
@@ -210,12 +210,12 @@ editProgramBottomSheet(context,ProgramModel program) {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.timer_outlined,
                                           size: 16,
                                           color: AppColors.mainItemColor,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Text(
@@ -267,16 +267,16 @@ dialogItemForUpdate(i, context) {
           children: [
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
                 Container(
-                  margin: EdgeInsets.all(12),
+                  margin: const EdgeInsets.all(12),
                   child: Row(
                     children: [
                       timePickerBox(
                           context, programResponse.routineItems?[i].time, true, "left", i),
-                      SizedBox(
+                      const SizedBox(
                         width: 14,
                       ),
                       timePickerBox(
@@ -294,7 +294,7 @@ dialogItemForUpdate(i, context) {
               child: Row(
                 children: [
                   bottomSheetButtons(context, "Cancel", true, i),
-                  SizedBox(
+                  const SizedBox(
                     width: 12,
                   ),
                   bottomSheetButtons(context, "Save Changes", false, i),
@@ -323,7 +323,7 @@ timePickerBox(context, time, bool start, String leftOrRight, i) {
       child: Container(
         alignment: Alignment.center,
         height: 55,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppColors.mainItemColor)),
@@ -391,8 +391,8 @@ Future customTimePicker(context, i) async {
 
 inputWidget(hint, controller, type, i) {
   return Container(
-    margin: EdgeInsets.all(12),
-    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    margin: const EdgeInsets.all(12),
+    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
     decoration: BoxDecoration(
         border: Border.all(color: AppColors.mainItemColor),
         borderRadius: BorderRadius.circular(12),

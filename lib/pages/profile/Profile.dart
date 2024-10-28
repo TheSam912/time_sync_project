@@ -1,9 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../constants/AppColor.dart';
+import '../../model/UserModel.dart';
+import '../../provider/usersProvider.dart';
+import 'auth/services/auth_service.dart';
 
 class Profile extends ConsumerStatefulWidget {
   Profile({super.key});
@@ -45,13 +49,13 @@ class _ProfileState extends ConsumerState<Profile> {
       physics: const ClampingScrollPhysics(),
       children: [
         topBarSection(),
-        listTileItem(
-            userEmail != "" ? "User: $userEmail" : "LOGIN / REGISTER", Icons.person_2_outlined),
-        listTileItem("Log Out", Icons.logout),
-        listTileItem("Change Password", Icons.lock_open),
-        listTileItem("Privacy And Policy", Icons.privacy_tip_outlined),
-        listTileItem("Rate Us", Icons.star_rate_outlined),
-        listTileItem("Contact Us", Icons.contact_support_outlined),
+        listTileItem(userEmail != "" ? "User: $userEmail" : "LOGIN / REGISTER",
+            Icons.person_2_outlined, userEmail != "" ? () {} : () => context.pushNamed("login")),
+        listTileItem("Log Out", Icons.logout, logoutDialog),
+        listTileItem("Change Password", Icons.lock_open, () {}),
+        listTileItem("Privacy And Policy", Icons.privacy_tip_outlined, () {}),
+        listTileItem("Rate Us", Icons.star_rate_outlined, () {}),
+        listTileItem("Contact Us", Icons.contact_support_outlined, () {}),
       ],
     );
   }
@@ -85,19 +89,18 @@ class _ProfileState extends ConsumerState<Profile> {
     );
   }
 
-  listTileItem(text, icon) {
+  listTileItem(text, icon, callback) {
     return GestureDetector(
-      onTap: () {},
+      onTap: callback,
       child: Column(
         children: [
           const SizedBox(
             height: 8,
           ),
           Container(
-            height: 70,
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(top: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(color: AppColors.backgroundColor),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,6 +141,59 @@ class _ProfileState extends ConsumerState<Profile> {
         ],
       ),
     );
+  }
+
+  void logoutDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: AppColors.mainItemColor,
+          title: Text(
+            "Are you want to logout?",
+            style: GoogleFonts.nunito(
+                color: AppColors.backgroundColor, fontSize: 18, fontWeight: FontWeight.w600),
+          ),
+          icon: const Icon(
+            Icons.warning,
+            color: Colors.amber,
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  "CANCEL",
+                  style: GoogleFonts.nunito(
+                      color: AppColors.backgroundColor, fontSize: 14, fontWeight: FontWeight.w700),
+                )),
+            Container(
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.amber),
+              child: TextButton(
+                  onPressed: () {
+                    logOut();
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "YES",
+                    style: GoogleFonts.nunito(
+                        color: AppColors.mainItemColor, fontSize: 14, fontWeight: FontWeight.w700),
+                  )),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  logOut() {
+    AuthService authService = AuthService();
+    authService.signOut();
+    ref.watch(userInformation.notifier).update(
+          (state) => state = UserModel(),
+        );
   }
 
   topBarSection() {

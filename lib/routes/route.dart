@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:time_sync/pages/profile/auth/Login.dart';
 import 'package:time_sync/pages/today/ai.dart';
 import 'package:time_sync/pages/today/today.dart';
 import '../pages/explore/Category.dart';
@@ -97,6 +98,21 @@ final GoRouter router =
           sliceTitle5: state.uri.queryParameters['sliceTitle5'] ?? "",
           pointList: const [],
         ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return myTransition(child, animation);
+        },
+      );
+    },
+  ),
+  GoRoute(
+    path: '/login',
+    name: "login",
+    parentNavigatorKey: _rootNavigatorKey,
+    pageBuilder: (BuildContext context, GoRouterState state) {
+      return CustomTransitionPage(
+        key: state.pageKey,
+        name: state.name,
+        child: const Login(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return myTransition(child, animation);
         },

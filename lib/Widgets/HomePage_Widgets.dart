@@ -27,7 +27,10 @@ appBarSection(titleDate, context) {
                       physics: const ClampingScrollPhysics(),
                       children: [
                         listTileItems(
-                            "User: ${FirebaseAuth.instance.currentUser?.email.toString() ?? "Not Found / LOGIN"}",
+                            //"User: ${FirebaseAuth.instance.currentUser?.email.toString() ?? "LOGIN / REGISTER"}",
+                            FirebaseAuth.instance.currentUser?.email != null
+                                ? "User: ${FirebaseAuth.instance.currentUser?.email.toString()}"
+                                : "LOGIN / REGISTER",
                             Icons.person_3_outlined,
                             () {},
                             false),

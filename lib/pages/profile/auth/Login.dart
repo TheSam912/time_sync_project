@@ -62,12 +62,21 @@ class _LoginState extends ConsumerState<Login> {
     return Scaffold(
       backgroundColor: AppColors.mainItemColor,
       appBar: PreferredSize(
-          preferredSize: const Size(double.infinity, 70),
-          child: Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(top: 30),
-            margin: const EdgeInsets.only(right: 12, top: 20),
-          )),
+        preferredSize: const Size(double.infinity, 50),
+        child: Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.only(top: 30),
+          margin: const EdgeInsets.only(right: 12, top: 20),
+          child: IconButton(
+              onPressed: () {
+                context.pop();
+              },
+              icon: Icon(
+                Icons.close,
+                color: AppColors.backgroundColor,
+              )),
+        ),
+      ),
       body: Stack(
         children: [
           Positioned(
@@ -177,6 +186,7 @@ class _LoginState extends ConsumerState<Login> {
                       if (_formKey.currentState?.validate() ?? false) {
                         TextInput.finishAutofillContext(shouldSave: true);
                         login(context);
+                        Navigator.pop(context);
                       }
                     },
                     child: Container(
