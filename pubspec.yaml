@@ -44,6 +44,7 @@ dependencies:
   flutter_svg:
   firebase_core: ^3.6.0
   firebase_auth:
+  firebase_messaging:
   cloud_firestore:
   shared_preferences:
   intl:

@@ -146,7 +146,7 @@ class _TodayState extends ConsumerState<Today> {
           style: GoogleFonts.nunito(
             color: AppColors.mainItemColor,
             fontWeight: FontWeight.w700,
-            fontSize: 22,
+            fontSize: 18,
           ),
         )
       ],
