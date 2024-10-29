@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:time_sync/Widgets/loading.dart';
 import '../../Widgets/Second_template.dart';
 import '../../provider/usersProvider.dart';
@@ -34,6 +35,8 @@ class _HomeState extends ConsumerState<Home> {
   List<ProgramModelRoutineItems>? roadMapElements = [];
   List<String> points = [];
   bool? isConnected;
+  double aiButtonWidth = 0;
+  bool showed = false;
 
   @override
   void initState() {
@@ -78,11 +81,36 @@ class _HomeState extends ConsumerState<Home> {
     });
   }
 
+  void animatedFloatingButton() {
+    if (showed) {
+      if (aiButtonWidth == 0) {
+        Future.delayed(
+          const Duration(seconds: 2),
+          () {
+            setState(() {
+              aiButtonWidth = MediaQuery.of(context).size.width;
+            });
+          },
+        );
+      } else {
+        Future.delayed(
+          const Duration(seconds: 8),
+          () {
+            setState(() {
+              aiButtonWidth = 0;
+              showed = false;
+            });
+          },
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     _fetchHomePageData();
+    animatedFloatingButton();
     titleDate = DateFormat.yMMMEd().format(DateTime.now());
-
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: appBarSection(titleDate, context),
@@ -128,6 +156,21 @@ class _HomeState extends ConsumerState<Home> {
         //       },
         //       child: const Text("NAVIGATE")),
         // ),
+        showed
+            ? AnimatedContainer(
+                width: aiButtonWidth,
+                duration: const Duration(seconds: 1),
+                margin: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.amber,
+                ),
+                child: const Text(
+                  "AI",
+                  textAlign: TextAlign.center,
+                ))
+            : const Center(),
         _programsSection(),
       ],
     );

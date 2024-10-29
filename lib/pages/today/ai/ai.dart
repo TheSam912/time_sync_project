@@ -305,7 +305,9 @@ class _aiState extends ConsumerState<ai> {
             ),
             Expanded(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.pushReplacementNamed("routinePlanAi");
+                },
                 child: Container(
                   height: 60,
                   margin: const EdgeInsets.only(right: 14, left: 12),

@@ -48,6 +48,7 @@ dependencies:
   cloud_firestore:
   shared_preferences:
   intl:
+  http:
   go_router:
   progressive_time_picker:
   connectivity_plus:

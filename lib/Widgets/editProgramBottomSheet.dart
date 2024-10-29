@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../model/ProgramModel.dart';
 import '../constants/AppColor.dart';
 
-Duration _duration = Duration(hours: 0, minutes: 0);
-
 editProgramBottomSheetUpdate(BuildContext context, ProgramModel program) {
   return Consumer(
     builder: (context, ref, child) {
@@ -24,14 +22,14 @@ editProgramBottomSheetUpdate(BuildContext context, ProgramModel program) {
         color: AppColors.backgroundColor,
         child: ListView(
           shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           children: [
             header(context),
             SizedBox(
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: program.routineItems?.length,
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     child: Container(
@@ -39,15 +37,15 @@ editProgramBottomSheetUpdate(BuildContext context, ProgramModel program) {
                       margin: const EdgeInsets.only(left: 12, bottom: 10, right: 12, top: 8),
                       decoration: BoxDecoration(
                           color: AppColors.backgroundColor,
-                          boxShadow: [BoxShadow(color: AppColors.mainItemColor, blurRadius: 8)],
+                          boxShadow: const [BoxShadow(color: AppColors.mainItemColor, blurRadius: 8)],
                           borderRadius: BorderRadius.circular(14)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                              decoration: BoxDecoration(
+                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                              decoration: const BoxDecoration(
                                   color: Colors.amber,
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(14), topLeft: Radius.circular(14))),
@@ -77,12 +75,12 @@ editProgramBottomSheetUpdate(BuildContext context, ProgramModel program) {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.timer_outlined,
                                           size: 16,
                                           color: AppColors.mainItemColor,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Text(
@@ -132,8 +130,8 @@ editProgramBottomSheetUpdate(BuildContext context, ProgramModel program) {
 
 header(context) {
   return Container(
-    padding: EdgeInsets.only(top: 60, bottom: 30),
-    decoration: BoxDecoration(
+    padding: const EdgeInsets.only(top: 60, bottom: 30),
+    decoration: const BoxDecoration(
         color: AppColors.mainItemColor,
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(50))),
     child: Row(
@@ -141,7 +139,7 @@ header(context) {
       children: [
         IconButton(
           onPressed: () {},
-          icon: Icon(
+          icon: const Icon(
             Icons.close,
             color: AppColors.mainItemColor,
           ),
@@ -152,7 +150,7 @@ header(context) {
               color: AppColors.backgroundColor, fontSize: 18, fontWeight: FontWeight.w800),
         ),
         Padding(
-          padding: EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 8),
           child: IconButton(
             onPressed: () {
               Navigator.pop(context);
