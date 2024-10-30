@@ -163,12 +163,12 @@ class _TodayState extends ConsumerState<Today> {
       physics: const ClampingScrollPhysics(),
       children: [
         SizedBox(
-          height: 120,
+          height: 135,
           child: Stack(
             children: [
               if (havePlan)
                 Container(
-                  padding: const EdgeInsets.only(bottom: 20, left: 14.0, top: 20, right: 30),
+                  padding: const EdgeInsets.only(bottom: 25, left: 14.0, top: 20),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(100),
@@ -188,22 +188,23 @@ class _TodayState extends ConsumerState<Today> {
                               fontSize: 22,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(left: 8),
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Text(
-                              "Routine Plan",
-                              style: GoogleFonts.nunito(
-                                color: AppColors.mainItemColor,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 20,
+                          Expanded(
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 8, right: 0),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              decoration: const BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                              child: Text(
+                                "Routine Plans",
+                                style: GoogleFonts.nunito(
+                                    color: AppColors.mainItemColor,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Container(
@@ -227,7 +228,7 @@ class _TodayState extends ConsumerState<Today> {
                 Positioned(
                   right: 15,
                   top: 0,
-                  bottom: -60,
+                  bottom: -78,
                   child: Container(
                     padding: const EdgeInsets.all(4),
                     decoration: const BoxDecoration(
@@ -279,8 +280,8 @@ class _TodayState extends ConsumerState<Today> {
               ),
               _buildBottomSheetOption(
                 context: context,
-                text: "Delete",
-                color: Colors.red,
+                text: "End Active Routine Plan",
+                color: Colors.amber,
                 onTap: voidForDeleteProgram,
               ),
             ],

@@ -66,7 +66,7 @@ class _ExploreState extends ConsumerState<Explore> {
 
   Widget _buildHeader() {
     return Container(
-      padding: const EdgeInsets.only(bottom: 20, left: 14.0, top: 20),
+      padding: const EdgeInsets.only(bottom: 30, left: 14.0, top: 8),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(100)),
         color: AppColors.mainItemColor,
@@ -78,22 +78,21 @@ class _ExploreState extends ConsumerState<Explore> {
             style: GoogleFonts.nunito(
               color: AppColors.backgroundColor,
               fontWeight: FontWeight.w600,
-              fontSize: 22,
+              fontSize: 20,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(left: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: Colors.amber,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              "Routine Plans",
-              style: GoogleFonts.nunito(
-                color: AppColors.mainItemColor,
-                fontWeight: FontWeight.w900,
-                fontSize: 20,
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.only(left: 8, right: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              decoration: const BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+              child: Text(
+                "Routine Plans Category",
+                style: GoogleFonts.nunito(
+                    color: AppColors.mainItemColor, fontWeight: FontWeight.w900, fontSize: 20),
               ),
             ),
           ),
