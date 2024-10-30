@@ -256,97 +256,129 @@ class _DetailState extends ConsumerState<Detail> {
 
   pirChatSection() {
     return Container(
-      height: 240,
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: AppColors.mainItemColor,
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(14),
           boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 12)]),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 130,
-            padding: const EdgeInsets.only(left: 20),
-            decoration: const BoxDecoration(
-              color: AppColors.mainItemColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Indicator(
-                  color: programResponse?.sliceItems?[0].sliceTitle == ""
-                      ? AppColors.mainItemColor
-                      : AppColors.pieColor1,
-                  text: programResponse?.sliceItems?[0].sliceTitle ?? "",
-                  isSquare: false,
-                  size: touchedIndex == 0 ? 14 : 12,
-                  textColor:
-                      touchedIndex == 0 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+          Padding(
+            padding: const EdgeInsets.only(left: 30, top: 20),
+            child: Row(
+              children: [
+                Text(
+                  "Focus Area:",
+                  style: GoogleFonts.nunito(
+                      color: AppColors.backgroundColor, fontWeight: FontWeight.w800, fontSize: 20),
                 ),
-                Indicator(
-                  color: programResponse?.sliceItems?[1].sliceTitle == ""
-                      ? AppColors.mainItemColor
-                      : AppColors.pieColor2,
-                  text: programResponse?.sliceItems?[1].sliceTitle ?? "",
-                  isSquare: false,
-                  size: touchedIndex == 1 ? 14 : 12,
-                  textColor:
-                      touchedIndex == 1 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    decoration: const BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                    child: const Text(
+                      "",
+                    ),
+                  ),
                 ),
-                Indicator(
-                  color: programResponse?.sliceItems?[2].sliceTitle == ""
-                      ? AppColors.mainItemColor
-                      : AppColors.pieColor3,
-                  text: programResponse?.sliceItems?[2].sliceTitle ?? "",
-                  isSquare: false,
-                  size: touchedIndex == 2 ? 14 : 12,
-                  textColor:
-                      touchedIndex == 2 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
-                ),
-                Indicator(
-                  color: programResponse?.sliceItems?[3].sliceTitle == ""
-                      ? AppColors.mainItemColor
-                      : AppColors.pieColor4,
-                  text: programResponse?.sliceItems?[3].sliceTitle ?? "",
-                  isSquare: false,
-                  size: touchedIndex == 2 ? 14 : 12,
-                  textColor:
-                      touchedIndex == 2 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
-                ),
-                Indicator(
-                  color: programResponse?.sliceItems?[4].sliceTitle == ""
-                      ? AppColors.mainItemColor
-                      : AppColors.pieColor5,
-                  text: programResponse?.sliceItems?[4].sliceTitle ?? "",
-                  isSquare: false,
-                  size: touchedIndex == 2 ? 14 : 12,
-                  textColor:
-                      touchedIndex == 2 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
-                )
               ],
             ),
           ),
-          Container(
-            width: 200,
-            height: 200,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.mainItemColor,
-            ),
-            margin: const EdgeInsets.only(right: 14),
-            child: PieChart(
-              PieChartData(
-                startDegreeOffset: randomItem,
-                sectionsSpace: 4,
-                centerSpaceRadius: 5,
-                sections: showingSections(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                height: 130,
+                padding: const EdgeInsets.only(left: 20),
+                decoration: const BoxDecoration(
+                  color: AppColors.mainItemColor,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Indicator(
+                      color: programResponse?.sliceItems?[0].sliceTitle == ""
+                          ? AppColors.mainItemColor
+                          : AppColors.pieColor1,
+                      text: programResponse?.sliceItems?[0].sliceTitle ?? "",
+                      isSquare: false,
+                      size: touchedIndex == 0 ? 14 : 12,
+                      textColor:
+                          touchedIndex == 0 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+                    ),
+                    Indicator(
+                      color: programResponse?.sliceItems?[1].sliceTitle == ""
+                          ? AppColors.mainItemColor
+                          : AppColors.pieColor2,
+                      text: programResponse?.sliceItems?[1].sliceTitle ?? "",
+                      isSquare: false,
+                      size: touchedIndex == 1 ? 14 : 12,
+                      textColor:
+                          touchedIndex == 1 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+                    ),
+                    Indicator(
+                      color: programResponse?.sliceItems?[2].sliceTitle == ""
+                          ? AppColors.mainItemColor
+                          : AppColors.pieColor3,
+                      text: programResponse?.sliceItems?[2].sliceTitle ?? "",
+                      isSquare: false,
+                      size: touchedIndex == 2 ? 14 : 12,
+                      textColor:
+                          touchedIndex == 2 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+                    ),
+                    Indicator(
+                      color: programResponse?.sliceItems?[3].sliceTitle == ""
+                          ? AppColors.mainItemColor
+                          : AppColors.pieColor4,
+                      text: programResponse?.sliceItems?[3].sliceTitle ?? "",
+                      isSquare: false,
+                      size: touchedIndex == 2 ? 14 : 12,
+                      textColor:
+                          touchedIndex == 2 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+                    ),
+                    Indicator(
+                      color: programResponse?.sliceItems?[4].sliceTitle == ""
+                          ? AppColors.mainItemColor
+                          : AppColors.pieColor5,
+                      text: programResponse?.sliceItems?[4].sliceTitle ?? "",
+                      isSquare: false,
+                      size: touchedIndex == 2 ? 14 : 12,
+                      textColor:
+                          touchedIndex == 2 ? AppColors.mainTextColor1 : AppColors.mainTextColor3,
+                    )
+                  ],
+                ),
               ),
-            ),
+              Container(
+                width: 200,
+                height: 200,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.mainItemColor,
+                ),
+                margin: const EdgeInsets.only(right: 14),
+                child: PieChart(
+                  PieChartData(
+                    startDegreeOffset: randomItem,
+                    sectionsSpace: 2,
+                    centerSpaceRadius: 0,
+                    sections: showingSections(),
+                  ),
+                ),
+              ),
+            ],
           ),
+          const SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
@@ -376,40 +408,68 @@ class _DetailState extends ConsumerState<Detail> {
   pointsSection() {
     return Container(
       color: AppColors.backgroundColor,
-      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 14),
-      child: ListView.builder(
-        itemCount: points.length,
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return SizedBox(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              index != 0
-                  ? Divider(
-                      thickness: 1,
-                      indent: 10,
-                      color: AppColors.mainItemColor.withOpacity(0.2),
-                    )
-                  : const Center(),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.star,
-                  color: Colors.orangeAccent,
-                  size: 14,
-                ),
-                label: Text(
-                  points[index],
-                  textAlign: TextAlign.justify,
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Row(
+              children: [
+                Text(
+                  "Points:",
                   style: GoogleFonts.nunito(
-                      fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black),
+                      color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 20),
                 ),
-              ),
-            ],
-          ));
-        },
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8),
+                    decoration: const BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                    child: const Text(
+                      "",
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ListView.builder(
+              itemCount: points.length,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.circle,
+                        color: Colors.orangeAccent,
+                        size: 12,
+                      ),
+                      label: Text(
+                        points[index],
+                        textAlign: TextAlign.justify,
+                        style: GoogleFonts.nunito(
+                            fontSize: 14, fontWeight: FontWeight.w700, color: Colors.black),
+                      ),
+                    ),
+                  ],
+                ));
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
