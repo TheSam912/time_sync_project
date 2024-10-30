@@ -23,7 +23,7 @@ class ProgramModelRoutineItems {
     this.Id,
   });
 
-  ProgramModelRoutineItems.fromJson(Map<String, dynamic> json) {
+  ProgramModelRoutineItems.fromJson(var json) {
     title = json['title']?.toString();
     description = json['description']?.toString();
     time = json['time']?.toString();

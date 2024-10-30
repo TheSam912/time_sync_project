@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +23,6 @@ class Detail extends ConsumerStatefulWidget {
 
 class _DetailState extends ConsumerState<Detail> {
   int touchedIndex = -1;
-  List angles = [0.0, 10.0, 20.0, 30.0, 45.0, 55.0, 70.0, 90.0, 140.0, 170.0];
   List<ProgramModelRoutineItems>? roadMapElements = [];
   List<String> points = [];
   ProgramModel? programResponse;
@@ -32,9 +30,7 @@ class _DetailState extends ConsumerState<Detail> {
   bool selectDetail = true;
   String? programId;
   bool selectSchedule = false;
-  bool favorite = false;
   String routineId = "";
-
   bool loading = true;
   bool isDone = false;
 
@@ -42,16 +38,12 @@ class _DetailState extends ConsumerState<Detail> {
     programResponse = await ref.watch(programRepositoryProvider).getOneProgram(id);
     if (programResponse != null) {
       programId = programResponse?.Id;
-      for (int i = 0; i < programResponse!.points!.length; i++) {
-        points.add(programResponse!.points![i]);
-      }
-      for (int i = 0; i < programResponse!.routineItems!.length; i++) {
-        roadMapElements?.add(ProgramModelRoutineItems(
-            Id: programResponse!.routineItems?[i].Id,
-            title: programResponse!.routineItems?[i].title,
-            description: programResponse!.routineItems?[i].description,
-            time: programResponse!.routineItems?[i].time,
-            isDone: programResponse!.routineItems?[i].isDone));
+      points.addAll(programResponse!.points ?? []);
+      var items = programResponse!.routineItems;
+      if (items != null) {
+        roadMapElements = items is List<Map<String, dynamic>>
+            ? items.map((item) => ProgramModelRoutineItems.fromJson(item)).toList()
+            : List<ProgramModelRoutineItems>.from(items);
       }
       setState(() {
         loading = false;
@@ -216,19 +208,34 @@ class _DetailState extends ConsumerState<Detail> {
 
   titleSection() {
     return Container(
-      padding: const EdgeInsets.only(bottom: 25),
+      padding: const EdgeInsets.only(bottom: 35),
       decoration: const BoxDecoration(
           color: AppColors.mainItemColor,
           boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 12)],
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(200))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Row(
         children: [
-          Text(
-            programResponse?.title ?? "",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.nunito(
-                color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 18),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 1.8,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Text(
+                programResponse?.title ?? "",
+                style: GoogleFonts.nunito(
+                    color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 20),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+              child: const Text(
+                "",
+              ),
+            ),
           ),
         ],
       ),
@@ -244,7 +251,7 @@ class _DetailState extends ConsumerState<Detail> {
       decoration: BoxDecoration(
           color: AppColors.mainItemColor,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [const BoxShadow(color: Colors.grey, blurRadius: 12)]),
+          boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 12)]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -357,7 +364,7 @@ class _DetailState extends ConsumerState<Detail> {
   pointsSection() {
     return Container(
       color: AppColors.backgroundColor,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 14),
       child: ListView.builder(
         itemCount: points.length,
         physics: const NeverScrollableScrollPhysics(),
@@ -397,10 +404,10 @@ class _DetailState extends ConsumerState<Detail> {
 
   tabSection() {
     return Container(
-      height: 50,
+      height: 40,
       margin: const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           border: Border.all(color: AppColors.mainItemColor, width: 2)),
       child: Row(
         children: [
@@ -417,7 +424,7 @@ class _DetailState extends ConsumerState<Detail> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10), bottomLeft: Radius.circular(10)),
+                        topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
                     color: selectDetail ? AppColors.mainItemColor : AppColors.backgroundColor),
                 child: Text(
                   "Detail",
@@ -441,7 +448,7 @@ class _DetailState extends ConsumerState<Detail> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(10), bottomRight: Radius.circular(10)),
+                        topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
                     color: selectSchedule ? AppColors.mainItemColor : AppColors.backgroundColor),
                 child: Text(
                   "Schedule",
@@ -622,9 +629,10 @@ class _DetailState extends ConsumerState<Detail> {
                       margin: const EdgeInsets.only(left: 25, bottom: 10, right: 12, top: 8),
                       decoration: BoxDecoration(
                           color: roadMapElements?[i].isDone == false
-                              ? AppColors.mainItemColor
+                              ? AppColors.backgroundColor
                               : Colors.grey.shade500,
-                          borderRadius: BorderRadius.circular(14)),
+                          borderRadius: BorderRadius.circular(14),
+                          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -679,7 +687,7 @@ class _DetailState extends ConsumerState<Detail> {
                               style: GoogleFonts.nunito(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
-                                  color: AppColors.backgroundColor),
+                                  color: AppColors.mainItemColor),
                             ),
                           )
                         ],
