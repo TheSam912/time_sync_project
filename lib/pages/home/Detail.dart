@@ -212,29 +212,41 @@ class _DetailState extends ConsumerState<Detail> {
       decoration: const BoxDecoration(
           color: AppColors.mainItemColor,
           boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 12)],
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(200))),
-      child: Row(
+          borderRadius: BorderRadius.only(bottomRight: Radius.circular(80))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width / 1.8,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: Text(
-                programResponse?.title ?? "",
-                style: GoogleFonts.nunito(
-                    color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 20),
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Text(
+              programResponse?.title ?? "",
+              style: GoogleFonts.nunito(
+                  color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 20),
             ),
           ),
-          Expanded(
-            child: Container(
-              decoration: const BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-              child: const Text(
-                "",
-              ),
+          Container(
+            height: 28,
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 12, left: 14),
+            padding: const EdgeInsets.only(left: 2),
+            decoration: const BoxDecoration(
+                color: Colors.amber,
+                borderRadius:
+                    BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+            child: Row(
+              children: [
+                Text(
+                  "#${programResponse?.category}" ?? "",
+                  style: GoogleFonts.nunito(
+                      color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 18),
+                ),
+                Expanded(
+                    child: Container(
+                  height: 2.5,
+                  margin: const EdgeInsets.only(left: 12),
+                  color: AppColors.mainItemColor,
+                ))
+              ],
             ),
           ),
         ],
