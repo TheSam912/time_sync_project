@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:time_sync/Widgets/loading.dart';
+import 'package:time_sync/model/UserModel.dart';
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';
@@ -33,7 +34,6 @@ class _TodayState extends ConsumerState<Today> {
   var programResponse;
   bool loading = true;
   bool havePlan = true;
-
   ProgramModel? userStateProgram;
 
   @override
@@ -52,7 +52,7 @@ class _TodayState extends ConsumerState<Today> {
               }
               return nothingDesign();
             }),
-        floatingActionButton: havePlan
+        floatingActionButton: havePlan == false
             ? null
             : GestureDetector(
                 onTap: () {
@@ -147,6 +147,24 @@ class _TodayState extends ConsumerState<Today> {
             color: AppColors.mainItemColor,
             fontWeight: FontWeight.w700,
             fontSize: 18,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            context.pushNamed("login");
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width / 2,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            margin: const EdgeInsets.only(top: 16),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(14), color: Colors.amber),
+            child: Center(
+              child: Text(
+                "LOGIN",
+                style: GoogleFonts.nunito(
+                    color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 16),
+              ),
+            ),
           ),
         )
       ],

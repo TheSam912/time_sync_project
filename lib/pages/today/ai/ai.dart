@@ -6,6 +6,7 @@ import 'package:time_sync/constants/AppColor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:time_sync/constants/strings.dart';
+import 'package:time_sync/pages/today/provider/questions_provider.dart';
 
 class ai extends ConsumerStatefulWidget {
   const ai({super.key});
@@ -17,18 +18,23 @@ class ai extends ConsumerStatefulWidget {
 class _aiState extends ConsumerState<ai> {
   late String titleDate;
   bool havePlan = false;
-  Set<String> selectedCommitment = {};
-  Set<String> selectedAspect = {};
-  Set<String> selectedDiet = {};
-  Set<String> selectedChallenges = {};
+  List<String> selectedCommitment = [];
+  List<String> selectedAspect = [];
+  List<String> selectedDiet = [];
+  List<String> selectedChallenges = [];
 
-  void toggleSelection(String challenge, list) {
+  void toggleSelection(String challenge, list, provider) {
     setState(() {
       if (list.contains(challenge)) {
-        list.remove(challenge); // Deselect
+        list.remove(challenge);
       } else {
-        list.add(challenge); // Select
+        list.add(challenge);
       }
+    });
+    ref.read(selectedCommitmentProvider);
+    ref.read(selectedCommitmentProvider.notifier).update((state) {
+      state = "fuck you";
+      return state;
     });
   }
 
@@ -36,7 +42,7 @@ class _aiState extends ConsumerState<ai> {
   Widget build(BuildContext context) {
     titleDate = DateFormat.yMMMEd().format(DateTime.now());
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: havePlan ? AppColors.backgroundColor : AppColors.mainItemColor,
         appBar: havePlan
             ? PreferredSize(
@@ -50,7 +56,7 @@ class _aiState extends ConsumerState<ai> {
         floatingActionButton: havePlan ? null : _buildWithAiButton());
   }
 
-  _buildQuestions() {
+  Widget _buildQuestions() {
     return ListView(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
@@ -61,7 +67,7 @@ class _aiState extends ConsumerState<ai> {
         gridListSection("Do you follow any specific diet restrictions?", specificDiet, "diet"),
         gridListSection("What are your main challenges?", challenges, "challenge"),
         specifyOtherSection(),
-        generateButton()
+        generateButton(),
       ],
     );
   }
@@ -96,16 +102,16 @@ class _aiState extends ConsumerState<ai> {
               return GestureDetector(
                 onTap: () {
                   if (type == "commitments") {
-                    toggleSelection(item, selectedCommitment);
+                    toggleSelection(item, selectedCommitment, selectedCommitmentProvider);
                   }
                   if (type == "aspect") {
-                    toggleSelection(item, selectedAspect);
+                    toggleSelection(item, selectedAspect, selectedAspectProvider);
                   }
                   if (type == "diet") {
-                    toggleSelection(item, selectedDiet);
+                    toggleSelection(item, selectedDiet, selectedDietProvider);
                   }
                   if (type == "challenge") {
-                    toggleSelection(item, selectedChallenges);
+                    toggleSelection(item, selectedChallenges, selectedChallengeProvider);
                   }
                 },
                 child: Container(
@@ -159,7 +165,7 @@ class _aiState extends ConsumerState<ai> {
 
   questionsTitle(text) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Text(
         text,
         style: GoogleFonts.nunito(
@@ -229,6 +235,7 @@ class _aiState extends ConsumerState<ai> {
               border: Border.all(color: AppColors.mainItemColor, width: 0.5)),
           child: TextField(
             maxLines: 6,
+            scrollPadding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             style: GoogleFonts.nunito(
                 color: AppColors.mainItemColor, fontSize: 14, fontWeight: FontWeight.w500),
             cursorColor: AppColors.mainItemColor,
@@ -241,6 +248,11 @@ class _aiState extends ConsumerState<ai> {
               hintStyle:
                   GoogleFonts.nunito(color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w700),
             ),
+            onChanged: (value) {
+              ref.watch(selectedTextProvider.notifier).update(
+                    (state) => state = value,
+                  );
+            },
           ),
         )
       ],
@@ -306,7 +318,7 @@ class _aiState extends ConsumerState<ai> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  context.pushReplacementNamed("routinePlanAi");
+                  updateStatesAndSend();
                 },
                 child: Container(
                   height: 60,
@@ -331,5 +343,33 @@ class _aiState extends ConsumerState<ai> {
         )
       ],
     );
+  }
+
+  void updateStatesAndSend() {
+    ref.read(selectedCommitmentProvider.notifier).update(
+      (state) {
+        state = selectedCommitment.toString();
+        return state;
+      },
+    );
+    ref.read(selectedAspectProvider.notifier).update(
+      (state) {
+        state = selectedAspect.toString();
+        return state;
+      },
+    );
+    ref.read(selectedDietProvider.notifier).update(
+      (state) {
+        state = selectedDiet.toString();
+        return state;
+      },
+    );
+    ref.read(selectedChallengeProvider.notifier).update(
+      (state) {
+        state = selectedChallenges.toString();
+        return state;
+      },
+    );
+    context.pushReplacementNamed("routinePlanAi");
   }
 }

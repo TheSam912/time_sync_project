@@ -1,19 +1,24 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:time_sync/model/AiProgramModel.dart';
+import '../../../Widgets/loading.dart';
 import '../../../constants/AppColor.dart';
+import '../../../constants/public.dart';
 import '../../../model/ProgramModel.dart';
 import '../../../utils/ai_request.dart';
+import '../../../utils/regEx.dart';
+import '../provider/questions_provider.dart';
 
-class RoutinePlanAi extends StatefulWidget {
+class RoutinePlanAi extends ConsumerStatefulWidget {
   const RoutinePlanAi({super.key});
 
   @override
-  State<RoutinePlanAi> createState() => _RoutinePlanAiState();
+  ConsumerState<RoutinePlanAi> createState() => _RoutinePlanAiState();
 }
 
-class _RoutinePlanAiState extends State<RoutinePlanAi> {
+class _RoutinePlanAiState extends ConsumerState<RoutinePlanAi> {
+  String? kCommitments, kAspects, kDiets, kChallenges, kText;
   ProgramModel? routinePlan;
   List<ProgramModelRoutineItems>? roadMapElements = [];
   bool isLoading = true;
@@ -22,9 +27,18 @@ class _RoutinePlanAiState extends State<RoutinePlanAi> {
   @override
   void initState() {
     super.initState();
+    fetchValues();
     Future.delayed(const Duration(milliseconds: 500), () {
       fetchAndDisplayRoutinePlan();
     });
+  }
+
+  fetchValues() {
+    kCommitments = regExString(ref.read(selectedCommitmentProvider));
+    kAspects = regExString(ref.read(selectedAspectProvider));
+    kDiets = regExString(ref.read(selectedDietProvider));
+    kChallenges = regExString(ref.read(selectedChallengeProvider));
+    kText = regExString(ref.read(selectedTextProvider));
   }
 
   Future<void> fetchAndDisplayRoutinePlan({int retries = 3}) async {
@@ -35,23 +49,28 @@ class _RoutinePlanAiState extends State<RoutinePlanAi> {
 
     try {
       final fetchedRoutinePlan = await fetchRoutinePlan(
-        apiKey:
-            "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",
-        fixedCommitments: "work, school",
-        goals: "improve sleep, reduce stress",
-        dietPreferences: "vegetarian",
-        challenges: "lack of time",
-        additionalPreferences: "Include morning yoga.",
+        apiKey: openAiKey,
+        fixedCommitments: kCommitments.toString(),
+        goals: kAspects.toString(),
+        dietPreferences: kDiets.toString(),
+        challenges: kChallenges.toString(),
+        additionalPreferences: kText.toString(),
       );
 
       if (fetchedRoutinePlan != null) {
-        for (int i = 0; i < fetchedRoutinePlan.routineItems!.length; i++) {
-          roadMapElements?.add(ProgramModelRoutineItems(
-              Id: fetchedRoutinePlan.routineItems?[i].Id,
-              title: fetchedRoutinePlan.routineItems?[i].title,
-              description: fetchedRoutinePlan.routineItems?[i].description,
-              time: fetchedRoutinePlan.routineItems?[i].time,
-              isDone: fetchedRoutinePlan.routineItems?[i].isDone));
+        // for (int i = 0; i < fetchedRoutinePlan.routineItems!.length; i++) {
+        //   roadMapElements?.add(ProgramModelRoutineItems(
+        //       Id: fetchedRoutinePlan.routineItems?[i].Id,
+        //       title: fetchedRoutinePlan.routineItems?[i].title,
+        //       description: fetchedRoutinePlan.routineItems?[i].description,
+        //       time: fetchedRoutinePlan.routineItems?[i].time,
+        //       isDone: fetchedRoutinePlan.routineItems?[i].isDone));
+        // }
+        var items = fetchedRoutinePlan.routineItems;
+        if (items != null) {
+          roadMapElements = items is List<Map<String, dynamic>>
+              ? items.map((item) => ProgramModelRoutineItems.fromJson(item)).toList()
+              : List<ProgramModelRoutineItems>.from(items);
         }
         setState(() {
           routinePlan = fetchedRoutinePlan;
@@ -91,7 +110,7 @@ class _RoutinePlanAiState extends State<RoutinePlanAi> {
         title: const Text("Your Routine Plan"),
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator()) // Loading indicator
+          ? Center(child: TimeSyncLoading()) // Loading indicator
           : errorMessage != null
               ? Center(
                   child: Column(
