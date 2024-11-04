@@ -29,7 +29,7 @@ Format the response strictly as a JSON object with the following structure:
 
 {
   "title": "Descriptive title of the program",
-  "description": "A summary of the program's purpose, without line breaks or special characters.",
+  "description": "A paragraph summary of the program's purpose, without line breaks or special characters.",
   "category": "Overall theme or category of the program (e.g., Balanced, Night Owl, Fitness Focused)",
   "sliceItems": [
     {
@@ -45,7 +45,7 @@ Format the response strictly as a JSON object with the following structure:
   "routineItems": [
     {
       "title": "Title of the activity (e.g., Wake Up Early) in a single line",
-      "description": "A description with no line breaks or special characters.",
+      "description": "A paragraph description with no line breaks or special characters.",
       "time": "Time range in the format 'HH:MM - HH:MM AM/PM' (e.g., '5:00 - 7:00 AM')",
       "isDone": false,
       "_id": "Unique identifier for each routine item"

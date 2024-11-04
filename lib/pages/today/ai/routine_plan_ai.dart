@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../Widgets/loading.dart';
@@ -28,9 +31,10 @@ class _RoutinePlanAiState extends ConsumerState<RoutinePlanAi> {
   void initState() {
     super.initState();
     fetchValues();
-    Future.delayed(const Duration(milliseconds: 500), () {
-      fetchAndDisplayRoutinePlan();
-    });
+    // Future.delayed(const Duration(milliseconds: 500), () {
+    //   fetchAndDisplayRoutinePlan();
+    // });
+    fetchAndDisplayRoutinePlanLocal();
   }
 
   fetchValues() {
@@ -39,6 +43,34 @@ class _RoutinePlanAiState extends ConsumerState<RoutinePlanAi> {
     kDiets = regExString(ref.read(selectedDietProvider));
     kChallenges = regExString(ref.read(selectedChallengeProvider));
     kText = regExString(ref.read(selectedTextProvider));
+  }
+
+  Future<void> fetchAndDisplayRoutinePlanLocal({int retries = 3}) async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+    try {
+      Map<String, dynamic> jsonResponse = {};
+      var jsonRes = await rootBundle.loadString("assets/data/ai_response.json");
+      jsonResponse = jsonDecode(jsonRes);
+      final fetchedRoutinePlan = ProgramModel.fromJson(jsonResponse);
+      var items = fetchedRoutinePlan.routineItems;
+      if (items != null) {
+        roadMapElements = items is List<Map<String, dynamic>>
+            ? items.map((item) => ProgramModelRoutineItems.fromJson(item)).toList()
+            : List<ProgramModelRoutineItems>.from(items);
+      }
+      setState(() {
+        routinePlan = fetchedRoutinePlan;
+        isLoading = false;
+      });
+        } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = "Could not load the routine plan. Please check your network and try again.";
+      });
+    }
   }
 
   Future<void> fetchAndDisplayRoutinePlan({int retries = 3}) async {
@@ -58,14 +90,6 @@ class _RoutinePlanAiState extends ConsumerState<RoutinePlanAi> {
       );
 
       if (fetchedRoutinePlan != null) {
-        // for (int i = 0; i < fetchedRoutinePlan.routineItems!.length; i++) {
-        //   roadMapElements?.add(ProgramModelRoutineItems(
-        //       Id: fetchedRoutinePlan.routineItems?[i].Id,
-        //       title: fetchedRoutinePlan.routineItems?[i].title,
-        //       description: fetchedRoutinePlan.routineItems?[i].description,
-        //       time: fetchedRoutinePlan.routineItems?[i].time,
-        //       isDone: fetchedRoutinePlan.routineItems?[i].isDone));
-        // }
         var items = fetchedRoutinePlan.routineItems;
         if (items != null) {
           roadMapElements = items is List<Map<String, dynamic>>

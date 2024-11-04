@@ -1,0 +1,99 @@
+{
+  "title": "Balanced Daily Routine for Improved Well-being",
+  "description": "A structured plan to enhance sleep, energy, focus, eating habits, and work-life balance.",
+  "category": "Balanced",
+  "sliceItems": [
+    {
+      "sliceTitle": "Sleep Improvement",
+      "sliceValue": 20,
+      "_id": "1"
+    },
+    {
+      "sliceTitle": "Energy Boost",
+      "sliceValue": 20,
+      "_id": "2"
+    },
+    {
+      "sliceTitle": "Focus Enhancement",
+      "sliceValue": 20,
+      "_id": "3"
+    },
+    {
+      "sliceTitle": "Healthy Eating",
+      "sliceValue": 20,
+      "_id": "4"
+    },
+    {
+      "sliceTitle": "Work-Life Balance",
+      "sliceValue": 20,
+      "_id": "5"
+    }
+  ],
+  "author": "TimeSync AI",
+  "points": [
+    "Improved Sleep Quality",
+    "Enhanced Energy Levels",
+    "Better Focus and Concentration",
+    "Healthy Eating Habits",
+    "Enhanced Work-Life Balance"
+  ],
+  "routineItems": [
+    {
+      "title": "Wake Up Early",
+      "description": "Start the day with a glass of water and light stretching.",
+      "time": "6:00 - 6:15 AM",
+      "isDone": false,
+      "_id": "1"
+    },
+    {
+      "title": "Breakfast",
+      "description": "Nutritious meal with whole grains, fruits, and protein.",
+      "time": "7:00 - 7:30 AM",
+      "isDone": false,
+      "_id": "2"
+    },
+    {
+      "title": "Work",
+      "description": "Engage in focused work tasks with short breaks in between.",
+      "time": "8:00 AM - 5:00 PM",
+      "isDone": false,
+      "_id": "3"
+    },
+    {
+      "title": "Lunch",
+      "description": "Balanced meal with vegetables, lean protein, and complex carbs.",
+      "time": "12:00 - 1:00 PM",
+      "isDone": false,
+      "_id": "4"
+    },
+    {
+      "title": "Family Time",
+      "description": "Quality time with family members to unwind and relax.",
+      "time": "6:00 - 8:00 PM",
+      "isDone": false,
+      "_id": "5"
+    },
+    {
+      "title": "Dinner",
+      "description": "Light and early dinner with a mix of nutrients and low on carbs.",
+      "time": "7:00 - 7:30 PM",
+      "isDone": false,
+      "_id": "6"
+    },
+    {
+      "title": "Relaxation",
+      "description": "Engage in calming activities like reading or meditation before bed.",
+      "time": "9:00 - 10:00 PM",
+      "isDone": false,
+      "_id": "7"
+    },
+    {
+      "title": "Bedtime Routine",
+      "description": "Prepare for bed by dimming lights, disconnecting from screens.",
+      "time": "10:00 - 10:30 PM",
+      "isDone": false,
+      "_id": "8"
+    }
+  ],
+  "updatedAt": "2022-01-15T15:30:00Z"
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:time_sync/Widgets/custom_snackbar.dart';
 import 'package:time_sync/constants/AppColor.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
@@ -16,6 +17,7 @@ class ai extends ConsumerStatefulWidget {
 }
 
 class _aiState extends ConsumerState<ai> {
+  TextEditingController otherSpecifyController = TextEditingController();
   late String titleDate;
   bool havePlan = false;
   List<String> selectedCommitment = [];
@@ -30,11 +32,6 @@ class _aiState extends ConsumerState<ai> {
       } else {
         list.add(challenge);
       }
-    });
-    ref.read(selectedCommitmentProvider);
-    ref.read(selectedCommitmentProvider.notifier).update((state) {
-      state = "fuck you";
-      return state;
     });
   }
 
@@ -138,7 +135,9 @@ class _aiState extends ConsumerState<ai> {
             },
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              otherBottomSheet(list, type);
+            },
             child: Container(
               height: 42,
               margin: const EdgeInsets.all(5),
@@ -160,6 +159,110 @@ class _aiState extends ConsumerState<ai> {
           )
         ],
       ),
+    );
+  }
+
+  otherBottomSheet(list, type) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.mainItemColor,
+      barrierColor: Colors.amber.withOpacity(0.6),
+      isScrollControlled: true,
+      builder: (context) {
+        return Container(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 0.70,
+          margin: const EdgeInsets.only(top: 10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Center(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          color: AppColors.backgroundColor,
+                        )),
+                  ),
+                ],
+              ),
+              Text(
+                "Please write down your specifies!",
+                style: GoogleFonts.nunito(
+                    color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 18),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: AppColors.mainItemColor,
+                  border: Border.all(color: AppColors.backgroundColor),
+                ),
+                child: TextField(
+                  controller: otherSpecifyController,
+                  scrollPadding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                  style: GoogleFonts.nunito(
+                      color: AppColors.backgroundColor, fontSize: 16, fontWeight: FontWeight.w500),
+                  cursorColor: AppColors.backgroundColor,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Write here ...",
+                    hintStyle: GoogleFonts.nunito(
+                        color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  var item = otherSpecifyController.text.trim();
+                  setState(() {
+                    list.add(otherSpecifyController.text.trim());
+                    otherSpecifyController.clear();
+                  });
+                  if (type == "commitments") {
+                    toggleSelection(item, selectedCommitment, selectedCommitmentProvider);
+                  }
+                  if (type == "aspect") {
+                    toggleSelection(item, selectedAspect, selectedAspectProvider);
+                  }
+                  if (type == "diet") {
+                    toggleSelection(item, selectedDiet, selectedDietProvider);
+                  }
+                  if (type == "challenge") {
+                    toggleSelection(item, selectedChallenges, selectedChallengeProvider);
+                  }
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  margin: const EdgeInsets.only(left: 14, right: 14, top: 25),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.amber,
+                  ),
+                  child: Text("Submit",
+                      style: GoogleFonts.nunito(
+                          color: AppColors.mainItemColor,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700)),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -346,30 +449,46 @@ class _aiState extends ConsumerState<ai> {
   }
 
   void updateStatesAndSend() {
-    ref.read(selectedCommitmentProvider.notifier).update(
-      (state) {
-        state = selectedCommitment.toString();
-        return state;
-      },
-    );
-    ref.read(selectedAspectProvider.notifier).update(
-      (state) {
-        state = selectedAspect.toString();
-        return state;
-      },
-    );
-    ref.read(selectedDietProvider.notifier).update(
-      (state) {
-        state = selectedDiet.toString();
-        return state;
-      },
-    );
-    ref.read(selectedChallengeProvider.notifier).update(
-      (state) {
-        state = selectedChallenges.toString();
-        return state;
-      },
-    );
-    context.pushReplacementNamed("routinePlanAi");
+    if (selectedCommitment.isNotEmpty) {
+      if (selectedAspect.isNotEmpty) {
+        if (selectedDiet.isNotEmpty) {
+          if (selectedChallenges.isNotEmpty) {
+            ref.read(selectedCommitmentProvider.notifier).update(
+              (state) {
+                state = selectedCommitment.toString();
+                return state;
+              },
+            );
+            ref.read(selectedAspectProvider.notifier).update(
+              (state) {
+                state = selectedAspect.toString();
+                return state;
+              },
+            );
+            ref.read(selectedDietProvider.notifier).update(
+              (state) {
+                state = selectedDiet.toString();
+                return state;
+              },
+            );
+            ref.read(selectedChallengeProvider.notifier).update(
+              (state) {
+                state = selectedChallenges.toString();
+                return state;
+              },
+            );
+            context.pushReplacementNamed("aiResponse");
+          } else {
+            customSnackBar(context, "Please select challenges !");
+          }
+        } else {
+          customSnackBar(context, "Please select your diet restriction !");
+        }
+      } else {
+        customSnackBar(context, "Please select you focusing area !");
+      }
+    } else {
+      customSnackBar(context, "Please select your commitments !");
+    }
   }
 }
