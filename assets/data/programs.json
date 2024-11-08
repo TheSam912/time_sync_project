@@ -1,0 +1,132 @@
+[
+  {
+    "_id": "66a500798ca1342bcb591e83",
+    "title": "Nocturnal Productivity Plan",
+    "description": "This routine is designed for night owls who are most productive during the late hours. It emphasizes 60% learning and productivity, 30% exercise, and includes time for personal care and relaxation.",
+    "category": "Productivity",
+    "sliceItems": [
+      {
+        "sliceTitle": "slice title test1",
+        "sliceValue": "50",
+        "_id": "66a500798ca1342bcb591e84"
+      },
+      {
+        "sliceTitle": "slice title test2",
+        "sliceValue": "20",
+        "_id": "66a500798ca1342bcb591e85"
+      },
+      {
+        "sliceTitle": "slice title test3",
+        "sliceValue": "10",
+        "_id": "66a500798ca1342bcb591e86"
+      },
+      {
+        "sliceTitle": "slice title test4",
+        "sliceValue": "10",
+        "_id": "66a500798ca1342bcb591e87"
+      },
+      {
+        "sliceTitle": "slice title test5",
+        "sliceValue": "10",
+        "_id": "66a500798ca1342bcb591e88"
+      }
+    ],
+    "author": "Sam",
+    "points": [
+      "Prioritization",
+      "Consistent Work Sessions",
+      "Prioritization"
+    ],
+    "routineItems": [
+      {
+        "title": "routine title1",
+        "description": "routine description",
+        "time": "5:00 AM 7:00 AM",
+        "isDone": false,
+        "_id": "66a500798ca1342bcb591e89"
+      },
+      {
+        "title": "routine title2",
+        "description": "routine description",
+        "time": "8:00 AM 10:00 AM",
+        "isDone": false,
+        "_id": "66a500798ca1342bcb591e8a"
+      },
+      {
+        "title": "routine title3",
+        "description": "routine description",
+        "time": "17:00 PM 22:00 PM",
+        "isDone": false,
+        "_id": "66a500798ca1342bcb591e8b"
+      }
+    ],
+    "createdAt": "2024-07-27T14:13:13.506Z",
+    "updatedAt": "2024-08-02T11:27:36.563Z",
+    "__v": 0
+  },
+  {
+    "_id": "66a4fffb8ca1342bcb591e70",
+    "title": "Nocturnal Productivity Plan",
+    "description": "This routine is designed for night owls who are most productive during the late hours. It emphasizes 60% learning and productivity, 30% exercise, and includes time for personal care and relaxation.",
+    "category": "Balanced",
+    "sliceItems": [
+      {
+        "sliceTitle": "Productivity",
+        "sliceValue": "40",
+        "_id": "66a4fffb8ca1342bcb591e71"
+      },
+      {
+        "sliceTitle": "General",
+        "sliceValue": "30",
+        "_id": "66a4fffb8ca1342bcb591e72"
+      },
+      {
+        "sliceTitle": "Workout",
+        "sliceValue": "10",
+        "_id": "66a4fffb8ca1342bcb591e73"
+      },
+      {
+        "sliceTitle": "Mental Health",
+        "sliceValue": "20",
+        "_id": "66a4fffb8ca1342bcb591e74"
+      },
+      {
+        "sliceTitle": "",
+        "sliceValue": "0",
+        "_id": "66a4fffb8ca1342bcb591e75"
+      }
+    ],
+    "author": "Sam",
+    "points": [
+      "Enhanced Productivity",
+      "Consistent Work Sessions",
+      "Prioritization"
+    ],
+    "routineItems": [
+      {
+        "title": "Wake Up Early",
+        "description": "Start your day early to maximize daylight hours.",
+        "time": "5:00 - 7:00 AM",
+        "isDone": false,
+        "_id": "66a4fffb8ca1342bcb591e76"
+      },
+      {
+        "title": "Hydrate and Freshen Up",
+        "description": "Drink a glass of water.\nBrush your teeth and wash your face.",
+        "time": "6:00 - 6:15 AM",
+        "isDone": false,
+        "_id": "66a4fffb8ca1342bcb591e77"
+      },
+      {
+        "title": "Exercise",
+        "description": "Engage in physical activity (yoga, running, gym workout).",
+        "time": "6:15 - 7:00 AM",
+        "isDone": false,
+        "_id": "66a4fffb8ca1342bcb591e78"
+      }
+    ],
+    "createdAt": "2024-07-27T14:11:07.253Z",
+    "updatedAt": "2024-07-29T20:11:09.072Z",
+    "__v": 0
+  }
+]
