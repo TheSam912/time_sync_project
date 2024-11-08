@@ -49,6 +49,8 @@ dependencies:
   shared_preferences:
   intl:
   http:
+  animate_do:
+  flutter_animate: ^4.2.0+1
   go_router:
   progressive_time_picker:
   connectivity_plus:
