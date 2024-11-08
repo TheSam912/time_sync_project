@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:time_sync/pages/profile/auth/Login.dart';
 import 'package:time_sync/pages/today/ai/ai.dart';
 import 'package:time_sync/pages/today/ai/ai_response.dart';
-import 'package:time_sync/pages/today/ai/routine_plan_ai.dart';
 import 'package:time_sync/pages/today/today.dart';
 import '../pages/explore/Category.dart';
 import '../pages/home/Detail.dart';

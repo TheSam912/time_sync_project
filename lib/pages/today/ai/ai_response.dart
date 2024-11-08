@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:time_sync/pages/explore/Category.dart';
 import '../../../Widgets/Indicator.dart';
 import '../../../Widgets/loading.dart';
 import '../../../constants/AppColor.dart';
@@ -285,7 +284,7 @@ class _AiResponseState extends ConsumerState<AiResponse> {
             child: Row(
               children: [
                 Text(
-                  "#${routinePlan?.category}" ?? "",
+                  "#${routinePlan?.category}",
                   style: GoogleFonts.nunito(
                       color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 18),
                 ),

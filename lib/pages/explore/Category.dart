@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../Widgets/Second_template.dart';
+import '../../Widgets/ProgramItem_template.dart';
 import '../../repository/programRepository.dart';
 import '../../constants/AppColor.dart';
 
@@ -109,7 +109,7 @@ class _CategoryState extends ConsumerState<Category> {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: programList.length,
                   itemBuilder: (context, index) {
-                    return SecondTemplate(
+                    return ProgramItemTemplate(
                       Id: programList[index].Id.toString(),
                       title: programList[index].title.toString(),
                       description: programList[index].description.toString(),

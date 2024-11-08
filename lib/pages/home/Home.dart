@@ -1,13 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:time_sync/Widgets/loading.dart';
-import '../../Widgets/Second_template.dart';
+import 'package:time_sync/model/CategoryModel.dart';
+import '../../Widgets/ProgramItem_template.dart';
 import '../../provider/usersProvider.dart';
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../model/ProgramModel.dart';
@@ -41,7 +45,8 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    _fetchHomePageDataLocal();
+    //_initialize();
   }
 
   Future<void> _initialize() async {
@@ -75,41 +80,35 @@ class _HomeState extends ConsumerState<Home> {
     }
   }
 
+  Future<void> _fetchHomePageDataLocal() async {
+    var jsonRes = await rootBundle.loadString("assets/data/ai_response.json");
+    var jsonResponse = jsonDecode(jsonRes);
+    setState(() {
+      programList = [
+        ProgramModel.fromJson(jsonResponse),
+        ProgramModel.fromJson(jsonResponse),
+        ProgramModel.fromJson(jsonResponse),
+      ];
+      categoryList = [
+        CategoryModel(Id: "", title: "Loss Weight"),
+        CategoryModel(Id: "", title: "OCD"),
+        CategoryModel(Id: "", title: "ADHD"),
+        CategoryModel(Id: "", title: "Balanced"),
+        CategoryModel(Id: "", title: "Fitness"),
+      ];
+      isLoading = false;
+    });
+  }
+
   void _showLoadingIndicator() {
     setState(() {
       isLoading = true;
     });
   }
 
-  void animatedFloatingButton() {
-    if (showed) {
-      if (aiButtonWidth == 0) {
-        Future.delayed(
-          const Duration(seconds: 2),
-          () {
-            setState(() {
-              aiButtonWidth = MediaQuery.of(context).size.width;
-            });
-          },
-        );
-      } else {
-        Future.delayed(
-          const Duration(seconds: 8),
-          () {
-            setState(() {
-              aiButtonWidth = 0;
-              showed = false;
-            });
-          },
-        );
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    _fetchHomePageData();
-    animatedFloatingButton();
+    // _fetchHomePageData();
     titleDate = DateFormat.yMMMEd().format(DateTime.now());
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -193,36 +192,41 @@ class _HomeState extends ConsumerState<Home> {
 
   Widget _buildCategoryItem(int index) {
     final isSelected = index == categoryIndex;
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.symmetric(horizontal: 3),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: isSelected ? AppColors.mainItemColor : AppColors.backgroundColor,
-        border: Border.all(color: AppColors.mainItemColor, width: 2),
-      ),
-      child: TextButton(
-        onPressed: () {
-          setState(() {
-            categoryIndex = index;
-            selectedProgramList = [];
-            if (index != 0) {
-              for (var program in programList ?? []) {
-                if (categoryList?[categoryIndex - 1].title == program.category) {
-                  selectedProgramList?.add(program);
+    return FadeIn(
+      delay: 1500.ms,
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.symmetric(horizontal: 3),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: isSelected ? AppColors.mainItemColor : AppColors.backgroundColor,
+          border: Border.all(color: AppColors.mainItemColor, width: 2),
+        ),
+        child: TextButton(
+          onPressed: () {
+            setState(() {
+              categoryIndex = index;
+              selectedProgramList = [];
+              if (index != 0) {
+                for (var program in programList ?? []) {
+                  if (categoryList?[categoryIndex - 1].title == program.category) {
+                    selectedProgramList?.add(program);
+                  }
                 }
               }
-            }
-          });
-        },
-        child: Text(
-          index == 0 ? "All" : categoryList?[index - 1].title.toString() ?? "",
-          style: GoogleFonts.nunito(
-            color: isSelected ? Colors.amber : AppColors.mainItemColor,
-            fontWeight: FontWeight.w700,
+            });
+          },
+          child: Text(
+            index == 0 ? "All" : categoryList?[index - 1].title.toString() ?? "",
+            style: GoogleFonts.nunito(
+              color: isSelected ? Colors.amber : AppColors.mainItemColor,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
-      ),
+      )
+          .animate(delay: 1000.ms)
+          .slideX(duration: 1500.ms, begin: 5, end: 0, curve: Curves.easeInOutSine),
     );
   }
 
@@ -242,7 +246,7 @@ class _HomeState extends ConsumerState<Home> {
 
   Widget _buildProgramItem(List<dynamic>? programs, int index) {
     final program = programs?[index];
-    return SecondTemplate(
+    return ProgramItemTemplate(
       Id: program?.Id.toString() ?? "",
       title: program?.title.toString() ?? "",
       description: program?.description.toString() ?? "",

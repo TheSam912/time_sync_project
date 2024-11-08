@@ -236,7 +236,7 @@ class _DetailState extends ConsumerState<Detail> {
             child: Row(
               children: [
                 Text(
-                  "#${programResponse?.category}" ?? "",
+                  "#${programResponse?.category}",
                   style: GoogleFonts.nunito(
                       color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 18),
                 ),
