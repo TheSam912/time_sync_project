@@ -750,7 +750,7 @@ class _DetailState extends ConsumerState<Detail> {
                               ? AppColors.backgroundColor
                               : Colors.grey.shade500,
                           borderRadius: BorderRadius.circular(14),
-                          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 10)]),
+                          boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 10)]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
