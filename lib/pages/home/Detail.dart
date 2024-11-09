@@ -135,7 +135,7 @@ class _DetailState extends ConsumerState<Detail> {
           builder: (context, ref, child) {
             ref.watch(userInformation);
             return SizedBox(
-              child: loading == false ? tabDesigns() : TimeSyncLoading(),
+              child: loading == false ? ExploreDesign() : TimeSyncLoading(),
             );
           },
         ));
@@ -496,7 +496,7 @@ class _DetailState extends ConsumerState<Detail> {
     );
   }
 
-  tabDesigns() {
+  ExploreDesign() {
     return DefaultTabController(
       length: 2,
       child: Column(
