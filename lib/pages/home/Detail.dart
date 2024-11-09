@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:animate_do/animate_do.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:time_sync/Widgets/loading.dart';
@@ -22,6 +25,7 @@ class Detail extends ConsumerStatefulWidget {
 }
 
 class _DetailState extends ConsumerState<Detail> {
+  var mainDuration = const Duration(milliseconds: 1000);
   int touchedIndex = -1;
   List<ProgramModelRoutineItems>? roadMapElements = [];
   List<String> points = [];
@@ -36,6 +40,25 @@ class _DetailState extends ConsumerState<Detail> {
 
   handleRequest(String id) async {
     programResponse = await ref.watch(programRepositoryProvider).getOneProgram(id);
+    if (programResponse != null) {
+      programId = programResponse?.Id;
+      points.addAll(programResponse!.points ?? []);
+      var items = programResponse!.routineItems;
+      if (items != null) {
+        roadMapElements = items is List<Map<String, dynamic>>
+            ? items.map((item) => ProgramModelRoutineItems.fromJson(item)).toList()
+            : List<ProgramModelRoutineItems>.from(items);
+      }
+      setState(() {
+        loading = false;
+      });
+    }
+  }
+
+  handleRequestLocal() async {
+    var jsonRes = await rootBundle.loadString("assets/data/program.json");
+    var jsonResponse = jsonDecode(jsonRes);
+    programResponse = ProgramModel.fromJson(jsonResponse);
     if (programResponse != null) {
       programId = programResponse?.Id;
       points.addAll(programResponse!.points ?? []);
@@ -85,7 +108,8 @@ class _DetailState extends ConsumerState<Detail> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      handleRequest(widget.Id);
+      // handleRequest(widget.Id);
+      handleRequestLocal();
       ref.read(userInformation).username;
     });
   }
@@ -116,7 +140,7 @@ class _DetailState extends ConsumerState<Detail> {
                               titleSection(),
                               tabSection(),
                               textSection(),
-                              pirChatSection(),
+                              pieChatSection(),
                               pointsSection(),
                               const SizedBox(
                                 height: 100,
@@ -207,54 +231,61 @@ class _DetailState extends ConsumerState<Detail> {
   }
 
   titleSection() {
-    return Container(
-      padding: const EdgeInsets.only(bottom: 35),
-      decoration: const BoxDecoration(
-          color: AppColors.mainItemColor,
-          boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 12)],
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(80))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text(
-              programResponse?.title ?? "",
-              style: GoogleFonts.nunito(
-                  color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 20),
-            ),
-          ),
-          Container(
-            height: 28,
-            width: double.infinity,
-            margin: const EdgeInsets.only(top: 12, left: 14),
-            padding: const EdgeInsets.only(left: 2),
-            decoration: const BoxDecoration(
-                color: Colors.amber,
-                borderRadius:
-                    BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-            child: Row(
-              children: [
-                Text(
-                  "#${programResponse?.category}",
+    return FadeInDown(
+      duration: mainDuration,
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 35),
+        decoration: const BoxDecoration(
+            color: AppColors.mainItemColor,
+            boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 12)],
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(80))),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: FadeInLeft(
+                duration: mainDuration,
+                delay: mainDuration + 200.ms,
+                child: Text(
+                  programResponse?.title ?? "",
                   style: GoogleFonts.nunito(
-                      color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 18),
+                      color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 20),
                 ),
-                Expanded(
-                    child: Container(
-                  height: 2.5,
-                  margin: const EdgeInsets.only(left: 12),
-                  color: AppColors.mainItemColor,
-                ))
-              ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              height: 28,
+              width: double.infinity,
+              margin: const EdgeInsets.only(top: 12, left: 14),
+              padding: const EdgeInsets.only(left: 2),
+              decoration: const BoxDecoration(
+                  color: Colors.amber,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+              child: Row(
+                children: [
+                  Text(
+                    "#${programResponse?.category}",
+                    style: GoogleFonts.nunito(
+                        color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 18),
+                  ),
+                  Expanded(
+                      child: Container(
+                    height: 2.5,
+                    margin: const EdgeInsets.only(left: 12),
+                    color: AppColors.mainItemColor,
+                  ))
+                ],
+              ),
+            ).animate(delay: 1500.ms).shimmer(duration: 1000.ms).flip(),
+          ],
+        ),
       ),
     );
   }
 
-  pirChatSection() {
+  pieChatSection() {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
@@ -381,7 +412,7 @@ class _DetailState extends ConsumerState<Detail> {
           )
         ],
       ),
-    );
+    ).animate(delay: 2000.ms).shimmer(duration: 1000.ms).scaleX();
   }
 
   textSection() {
@@ -394,11 +425,14 @@ class _DetailState extends ConsumerState<Detail> {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-          child: Text(
-            programResponse?.description ?? "",
-            textAlign: TextAlign.justify,
-            style:
-                GoogleFonts.nunito(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15),
+          child: FadeInLeft(
+            delay: mainDuration + 1500.ms,
+            child: Text(
+              programResponse?.description ?? "",
+              textAlign: TextAlign.justify,
+              style: GoogleFonts.nunito(
+                  color: Colors.black, fontWeight: FontWeight.w500, fontSize: 15),
+            ),
           ),
         ),
       ),
@@ -416,20 +450,26 @@ class _DetailState extends ConsumerState<Detail> {
             padding: const EdgeInsets.only(left: 20),
             child: Row(
               children: [
-                Text(
-                  "Points:",
-                  style: GoogleFonts.nunito(
-                      color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 20),
+                FadeInLeft(
+                  delay: mainDuration + 2000.ms,
+                  child: Text(
+                    "Points:",
+                    style: GoogleFonts.nunito(
+                        color: AppColors.mainItemColor, fontWeight: FontWeight.w800, fontSize: 20),
+                  ),
                 ),
                 Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 8),
-                    decoration: const BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-                    child: const Text(
-                      "",
+                  child: FadeInRight(
+                    delay: mainDuration + 2000.ms,
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 8),
+                      decoration: const BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                      child: const Text(
+                        "",
+                      ),
                     ),
                   ),
                 ),
@@ -447,7 +487,7 @@ class _DetailState extends ConsumerState<Detail> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return SizedBox(
-                    child: Column(
+                        child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton.icon(
@@ -465,7 +505,9 @@ class _DetailState extends ConsumerState<Detail> {
                       ),
                     ),
                   ],
-                ));
+                ))
+                    .animate(delay: 2500.ms)
+                    .slideY(duration: 1300.ms, begin: 10, end: 0, curve: Curves.easeInOutSine);
               },
             ),
           ),
@@ -533,7 +575,7 @@ class _DetailState extends ConsumerState<Detail> {
           )
         ],
       ),
-    );
+    ).animate(delay: 1800.ms).shimmer(duration: 1000.ms).fadeIn();
   }
 
   tabButton(text, position) {
@@ -660,15 +702,19 @@ class _DetailState extends ConsumerState<Detail> {
             );
             // addToCalendar();
           },
-          child: Container(
-            height: 60,
-            margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
-            decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
-            child: Center(
-              child: Text(
-                "Add to my Calendar",
-                style: GoogleFonts.nunito(
-                    fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.mainItemColor),
+          child: FadeIn(
+            delay: mainDuration + 4000.ms,
+            child: Container(
+              height: 60,
+              margin: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+              decoration:
+                  BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child: Text(
+                  "Add to my Calendar",
+                  style: GoogleFonts.nunito(
+                      fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.mainItemColor),
+                ),
               ),
             ),
           ),

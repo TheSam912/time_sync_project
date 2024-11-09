@@ -104,7 +104,7 @@ homePageTop() {
               children: [
                 FadeInLeft(
                   duration: mainDuration,
-                  delay: mainDuration + const Duration(milliseconds: 200),
+                  delay: mainDuration + 200.ms,
                   child: Text(
                     "Today's",
                     style: GoogleFonts.nunito(
