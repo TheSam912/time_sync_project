@@ -6,57 +6,75 @@ import 'package:google_fonts/google_fonts.dart';
 import '../constants/AppColor.dart';
 
 appBarSection(titleDate, context) {
-  return AppBar(
-    backgroundColor: AppColors.mainItemColor,
-    centerTitle: false,
-    title: FadeInLeft(
-      child: Text(
-        titleDate,
-        style: GoogleFonts.nunito(
-            color: AppColors.backgroundColor, fontSize: 18, fontWeight: FontWeight.w800),
+  return PreferredSize(
+    preferredSize: const Size.fromHeight(kToolbarHeight),
+    child: Container(
+      decoration: const BoxDecoration(
+        color: AppColors.mainItemColor,
+        border: Border(
+          bottom: BorderSide(color: AppColors.mainItemColor, width: 0),
+        ),
       ),
-    ),
-    actions: [
-      Padding(
-        padding: const EdgeInsets.only(right: 8.0),
-        child: FadeInRight(
-          child: IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return Container(
-                      color: AppColors.mainItemColor,
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        children: [
-                          listTileItems(
-                              //"User: ${FirebaseAuth.instance.currentUser?.email.toString() ?? "LOGIN / REGISTER"}",
+      child: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: AppColors.backgroundColor,
+        elevation: 0,
+        centerTitle: false,
+        title: FadeInLeft(
+          child: Text(
+            titleDate,
+            style: GoogleFonts.nunito(
+              color: AppColors.backgroundColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: FadeInRight(
+              child: IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        color: AppColors.mainItemColor,
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          children: [
+                            listTileItems(
                               FirebaseAuth.instance.currentUser?.email != null
                                   ? "User: ${FirebaseAuth.instance.currentUser?.email.toString()}"
                                   : "LOGIN / REGISTER",
                               Icons.person_3_outlined,
                               () {},
-                              false),
-                          listTileItems(
-                              "Privacy And Policy", Icons.privacy_tip_outlined, () {}, true),
-                          listTileItems("Rate Us", Icons.star_rate_outlined, () {}, true),
-                          listTileItems("Contact Us", Icons.contact_support_outlined, () {}, true),
-                          listTileItems("Fallow Us", Icons.support, () {}, true),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              },
-              icon: Icon(
-                Icons.settings,
-                color: AppColors.backgroundColor,
-              )),
-        ),
+                              false,
+                            ),
+                            listTileItems(
+                                "Privacy And Policy", Icons.privacy_tip_outlined, () {}, true),
+                            listTileItems("Rate Us", Icons.star_rate_outlined, () {}, true),
+                            listTileItems(
+                                "Contact Us", Icons.contact_support_outlined, () {}, true),
+                            listTileItems("Fallow Us", Icons.support, () {}, true),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+                icon: Icon(
+                  Icons.settings,
+                  color: AppColors.backgroundColor,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
-    ],
+    ),
   );
 }
 
@@ -145,7 +163,9 @@ homePageTop() {
                   child: Text(
                     "Tomorrow's",
                     style: GoogleFonts.nunito(
-                        color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 22),
+                        color: AppColors.backgroundColor,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 22),
                   ),
                 ),
               ),

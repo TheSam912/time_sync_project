@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../routes/route.dart';
@@ -14,13 +16,13 @@ void main() async {
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Message received: ${message.notification?.title}, ${message.notification?.body}');
   });
-  runApp(const ProviderScope(child: MyApp()));
-  // runApp(
-  //   DevicePreview(
-  //     enabled: !kReleaseMode,
-  //     builder: (context) => ProviderScope(child: MyApp()),
-  //   ),
-  // );
+  // runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const ProviderScope(child: MyApp()),
+    ),
+  );
 }
 
 void getToken() async {

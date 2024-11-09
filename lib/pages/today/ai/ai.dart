@@ -385,7 +385,7 @@ class _aiState extends ConsumerState<ai> {
               ),
             ),
             SizedBox(
-              child: Lottie.asset("assets/lottie/ai.json", height: 160, width: 160),
+              child: Lottie.asset("assets/lottie/ai.json", height: 140, width: 140),
             ),
           ],
         ),

@@ -56,6 +56,9 @@ class _ProfileState extends ConsumerState<Profile> {
         listTileItem("Privacy And Policy", Icons.privacy_tip_outlined, () {}),
         listTileItem("Rate Us", Icons.star_rate_outlined, () {}),
         listTileItem("Contact Us", Icons.contact_support_outlined, () {}),
+        const SizedBox(
+          height: 150,
+        )
       ],
     );
   }

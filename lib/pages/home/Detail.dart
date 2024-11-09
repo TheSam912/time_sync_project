@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:time_sync/Widgets/loading.dart';
+import '../../Widgets/HomePage_Widgets.dart';
 import '../../Widgets/Indicator.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../model/ProgramModel.dart';
@@ -25,13 +27,14 @@ class Detail extends ConsumerStatefulWidget {
 }
 
 class _DetailState extends ConsumerState<Detail> {
-  var mainDuration = const Duration(milliseconds: 1000);
+  var mainDuration = 500.ms;
+  late String titleDate;
   int touchedIndex = -1;
   List<ProgramModelRoutineItems>? roadMapElements = [];
   List<String> points = [];
   ProgramModel? programResponse;
   late double randomItem;
-  bool selectDetail = true;
+  bool animated = true;
   String? programId;
   bool selectSchedule = false;
   String routineId = "";
@@ -116,46 +119,23 @@ class _DetailState extends ConsumerState<Detail> {
 
   @override
   Widget build(BuildContext context) {
+    titleDate = DateFormat.yMMMEd().format(DateTime.now());
     randomItem = 45.0;
+    Future.delayed(
+        4000.ms,
+        () => setState(() {
+              animated = false;
+            }));
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
-        appBar: AppBar(
-          backgroundColor: AppColors.mainItemColor,
-          elevation: 0,
-          surfaceTintColor: AppColors.mainItemColor,
-          foregroundColor: AppColors.backgroundColor,
-        ),
+        appBar: appBarSection(titleDate, context),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: loading == false ? startButton() : const Center(),
         body: Consumer(
           builder: (context, ref, child) {
             ref.watch(userInformation);
             return SizedBox(
-              child: loading == false
-                  ? ListView(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      children: selectDetail
-                          ? [
-                              titleSection(),
-                              tabSection(),
-                              textSection(),
-                              pieChatSection(),
-                              pointsSection(),
-                              const SizedBox(
-                                height: 100,
-                              )
-                            ]
-                          : [
-                              titleSection(),
-                              tabSection(),
-                              roadMapSection(),
-                              const SizedBox(
-                                height: 100,
-                              )
-                            ],
-                    )
-                  : TimeSyncLoading(),
+              child: loading == false ? tabDesigns() : TimeSyncLoading(),
             );
           },
         ));
@@ -246,7 +226,7 @@ class _DetailState extends ConsumerState<Detail> {
               padding: const EdgeInsets.only(left: 16),
               child: FadeInLeft(
                 duration: mainDuration,
-                delay: mainDuration + 200.ms,
+                delay: mainDuration,
                 child: Text(
                   programResponse?.title ?? "",
                   style: GoogleFonts.nunito(
@@ -278,14 +258,14 @@ class _DetailState extends ConsumerState<Detail> {
                   ))
                 ],
               ),
-            ).animate(delay: 1500.ms).shimmer(duration: 1000.ms).flip(),
+            ).animate(delay: 500.ms).shimmer(duration: 1000.ms).flip(),
           ],
         ),
       ),
     );
   }
 
-  pieChatSection() {
+  pieChartSection() {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
@@ -412,7 +392,7 @@ class _DetailState extends ConsumerState<Detail> {
           )
         ],
       ),
-    ).animate(delay: 2500.ms).shimmer(duration: 1000.ms).scaleX();
+    ).animate(delay: mainDuration).shimmer(duration: 1000.ms).scaleX();
   }
 
   textSection() {
@@ -426,7 +406,7 @@ class _DetailState extends ConsumerState<Detail> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 12),
           child: FadeInLeft(
-            delay: mainDuration + 1500.ms,
+            delay: mainDuration,
             child: Text(
               programResponse?.description ?? "",
               textAlign: TextAlign.justify,
@@ -451,7 +431,7 @@ class _DetailState extends ConsumerState<Detail> {
             child: Row(
               children: [
                 FadeInLeft(
-                  delay: mainDuration + 2000.ms,
+                  delay: mainDuration,
                   child: Text(
                     "Points:",
                     style: GoogleFonts.nunito(
@@ -460,7 +440,7 @@ class _DetailState extends ConsumerState<Detail> {
                 ),
                 Expanded(
                   child: FadeInRight(
-                    delay: mainDuration + 2000.ms,
+                    delay: mainDuration,
                     child: Container(
                       margin: const EdgeInsets.only(left: 8),
                       decoration: const BoxDecoration(
@@ -506,7 +486,7 @@ class _DetailState extends ConsumerState<Detail> {
                     ),
                   ],
                 ))
-                    .animate(delay: 2500.ms)
+                    .animate(delay: mainDuration)
                     .slideY(duration: 1300.ms, begin: 10, end: 0, curve: Curves.easeInOutSine);
               },
             ),
@@ -516,88 +496,75 @@ class _DetailState extends ConsumerState<Detail> {
     );
   }
 
-  tabSection() {
-    return Container(
-      height: 40,
-      margin: const EdgeInsets.only(left: 12, right: 12, top: 20, bottom: 5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColors.mainItemColor, width: 2)),
-      child: Row(
+  tabDesigns() {
+    return DefaultTabController(
+      length: 2,
+      child: Column(
         children: [
-          Flexible(
-            flex: 5,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectDetail = true;
-                  selectSchedule = false;
-                });
-              },
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
-                    color: selectDetail ? AppColors.mainItemColor : AppColors.backgroundColor),
-                child: Text(
-                  "Detail",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                      color: selectDetail ? AppColors.backgroundColor : AppColors.mainItemColor),
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 5,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectSchedule = true;
-                  selectDetail = false;
-                });
-              },
-              child: Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-                    color: selectSchedule ? AppColors.mainItemColor : AppColors.backgroundColor),
-                child: Text(
-                  "Schedule",
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                      color: selectSchedule ? AppColors.backgroundColor : AppColors.mainItemColor),
-                ),
+          titleSection(),
+          tabItemDesign(),
+          Expanded(
+            child: SizedBox(
+              height: 500,
+              child: TabBarView(
+                children: [
+                  ListView(
+                    children: [textSection(), pieChartSection(), pointsSection(), spacer100()],
+                  ),
+                  ListView(
+                    children: [roadMapSection(), spacer100()],
+                  ),
+                ],
               ),
             ),
           )
         ],
       ),
-    ).animate(delay: 1800.ms).shimmer(duration: 1000.ms).fadeIn();
+    );
   }
 
-  tabButton(text, position) {
-    return Flexible(
-      flex: 5,
-      child: GestureDetector(
-        onTap: () {},
-        child: Container(
-          height: 40,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: position == "left"
-                  ? const BorderRadius.only(
-                      topLeft: Radius.circular(12), bottomLeft: Radius.circular(12))
-                  : const BorderRadius.only(
-                      topRight: Radius.circular(12), bottomRight: Radius.circular(12)),
-              color: AppColors.mainItemColor),
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.nunito(color: AppColors.backgroundColor),
+  tabItemDesign() {
+    return FadeInLeft(
+      delay: mainDuration,
+      child: Container(
+        margin: const EdgeInsets.only(left: 14, right: 14, top: 20, bottom: 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: AppColors.mainItemColor, width: 2),
+        ),
+        child: TabBar(
+          labelStyle: GoogleFonts.nunito(
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
           ),
+          unselectedLabelStyle: GoogleFonts.nunito(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
+          labelColor: AppColors.mainItemColor,
+          dividerHeight: 0,
+          indicatorSize: TabBarIndicatorSize.tab,
+          dividerColor: AppColors.backgroundColor,
+          indicatorColor: Colors.transparent,
+          overlayColor: MaterialStateProperty.resolveWith<Color?>(
+            (states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.transparent;
+              }
+              return null;
+            },
+          ),
+          unselectedLabelColor: AppColors.mainItemColor.withOpacity(0.5),
+          tabs: const [
+            Tab(
+              icon: null,
+              text: 'Details',
+            ),
+            Tab(
+              icon: null,
+              text: 'Schedule',
+            ),
+          ],
         ),
       ),
     );
@@ -732,86 +699,89 @@ class _DetailState extends ConsumerState<Detail> {
           itemCount: roadMapElements?.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
-            return Stack(
-              children: [
-                roadMapLine(i),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      routineId = roadMapElements?[i].Id.toString() ?? "";
-                    });
-                    //toggleRequest();
-                  },
-                  child: Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(left: 25, bottom: 10, right: 12, top: 8),
-                      decoration: BoxDecoration(
-                          color: roadMapElements?[i].isDone == false
-                              ? AppColors.backgroundColor
-                              : Colors.grey.shade500,
-                          borderRadius: BorderRadius.circular(14),
-                          boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 10)]),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                              decoration: BoxDecoration(
-                                  color: roadMapElements?[i].isDone == false
-                                      ? Colors.amber
-                                      : Colors.grey.shade500,
-                                  borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(14), topLeft: Radius.circular(14))),
-                              alignment: Alignment.centerRight,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    roadMapElements?[i].title ?? "",
-                                    style: GoogleFonts.nunito(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.mainItemColor),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.timer_outlined,
-                                        size: 16,
-                                        color: AppColors.mainItemColor,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        roadMapElements?[i].time ?? "",
-                                        style: GoogleFonts.nunito(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                            color: AppColors.mainItemColor),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-                            child: Text(
-                              roadMapElements?[i].description ?? "",
-                              maxLines: 10,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.nunito(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.mainItemColor),
-                            ),
-                          )
-                        ],
-                      )),
-                )
-              ],
+            return FadeInLeft(
+              delay: mainDuration,
+              child: Stack(
+                children: [
+                  roadMapLine(i),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        routineId = roadMapElements?[i].Id.toString() ?? "";
+                      });
+                      //toggleRequest();
+                    },
+                    child: Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(left: 25, bottom: 10, right: 12, top: 8),
+                        decoration: BoxDecoration(
+                            color: roadMapElements?[i].isDone == false
+                                ? AppColors.backgroundColor
+                                : Colors.grey.shade500,
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 10)]),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                decoration: BoxDecoration(
+                                    color: roadMapElements?[i].isDone == false
+                                        ? Colors.amber
+                                        : Colors.grey.shade500,
+                                    borderRadius: const BorderRadius.only(
+                                        topRight: Radius.circular(14), topLeft: Radius.circular(14))),
+                                alignment: Alignment.centerRight,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      roadMapElements?[i].title ?? "",
+                                      style: GoogleFonts.nunito(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.mainItemColor),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.timer_outlined,
+                                          size: 16,
+                                          color: AppColors.mainItemColor,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          roadMapElements?[i].time ?? "",
+                                          style: GoogleFonts.nunito(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors.mainItemColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+                              child: Text(
+                                roadMapElements?[i].description ?? "",
+                                maxLines: 10,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.nunito(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.mainItemColor),
+                              ),
+                            )
+                          ],
+                        )),
+                  )
+                ],
+              ),
             );
           },
         ),
@@ -887,5 +857,11 @@ class _DetailState extends ConsumerState<Detail> {
                       ),
           )
         : const Center();
+  }
+
+  spacer100() {
+    return const SizedBox(
+      height: 100,
+    );
   }
 }
