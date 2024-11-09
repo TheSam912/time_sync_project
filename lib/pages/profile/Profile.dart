@@ -1,5 +1,7 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,6 +19,7 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<Profile> {
+  var mainDuration = 500.ms;
   late String titleDate;
 
   @override
@@ -34,16 +37,16 @@ class _ProfileState extends ConsumerState<Profile> {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return profileDesign(snapshot.data!.email);
+              return settingsDesign(snapshot.data!.email);
             }
-            return profileDesign("");
+            return settingsDesign("");
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: socialButtons(),
     );
   }
 
-  profileDesign(userEmail) {
+  settingsDesign(userEmail) {
     return ListView(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
@@ -64,14 +67,17 @@ class _ProfileState extends ConsumerState<Profile> {
   }
 
   socialButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        socialItem("telegram"),
-        socialItem("social"),
-        socialItem("internet"),
-        socialItem("youtube"),
-      ],
+    return FadeInUp(
+      delay: mainDuration + 1000.ms,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          socialItem("telegram"),
+          socialItem("social"),
+          socialItem("internet"),
+          socialItem("youtube"),
+        ],
+      ),
     );
   }
 
@@ -142,7 +148,7 @@ class _ProfileState extends ConsumerState<Profile> {
             color: Colors.grey,
           )
         ],
-      ),
+      ).animate(delay: 500.ms).shimmer(duration: 1000.ms).flip(),
     );
   }
 
@@ -200,71 +206,80 @@ class _ProfileState extends ConsumerState<Profile> {
   }
 
   topBarSection() {
-    return Container(
-      height: 130,
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
-          color: AppColors.mainItemColor),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 14),
-            child: Row(
-              children: [
-                Text(
-                  "Profile",
-                  style: GoogleFonts.nunito(
-                      color: AppColors.backgroundColor, fontWeight: FontWeight.w700, fontSize: 22),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: const BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+    return FadeInDown(
+      delay: mainDuration,
+      child: Container(
+        height: 130,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
+            color: AppColors.mainItemColor),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 14),
+              child: Row(
+                children: [
+                  FadeInLeft(
+                    delay: mainDuration,
+                    duration: mainDuration,
                     child: Text(
-                      "Page",
+                      "Profile",
                       style: GoogleFonts.nunito(
-                          color: AppColors.mainItemColor,
-                          fontWeight: FontWeight.w900,
+                          color: AppColors.backgroundColor,
+                          fontWeight: FontWeight.w700,
                           fontSize: 22),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 3),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: const BoxDecoration(
-                        color: Colors.amber,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
-                    child: Text(
-                      titleDate,
-                      style: GoogleFonts.nunito(
-                          color: AppColors.mainItemColor,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 20),
-                    ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: const BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                      child: Text(
+                        "Page",
+                        style: GoogleFonts.nunito(
+                            color: AppColors.mainItemColor,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 22),
+                      ),
+                    ).animate(delay: 500.ms).shimmer(duration: 1000.ms).flip(),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(
+              height: 8,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 3),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: const BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(5), bottomLeft: Radius.circular(5))),
+                      child: Text(
+                        titleDate,
+                        style: GoogleFonts.nunito(
+                            color: AppColors.mainItemColor,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20),
+                      ),
+                    ).animate(delay: 700.ms).shimmer(duration: 1000.ms).flip(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
