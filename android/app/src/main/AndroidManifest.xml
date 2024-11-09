@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"> <!-- Add tools namespace here -->
     <application
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
         android:enableOnBackInvokedCallback="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="time_sync">
 
         <activity
@@ -12,6 +12,7 @@
             android:exported="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:taskAffinity=""
             android:theme="@style/LaunchTheme"
             android:windowSoftInputMode="adjustResize">

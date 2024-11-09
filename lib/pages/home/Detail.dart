@@ -412,7 +412,7 @@ class _DetailState extends ConsumerState<Detail> {
           )
         ],
       ),
-    ).animate(delay: 2000.ms).shimmer(duration: 1000.ms).scaleX();
+    ).animate(delay: 2500.ms).shimmer(duration: 1000.ms).scaleX();
   }
 
   textSection() {
