@@ -43,22 +43,25 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
         foregroundColor: AppColors.backgroundColor,
       ),
       body: ListView(
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Center(
-                child: Image.asset(
-                  "assets/images/successful.png",
-                  color: Colors.amber,
-                  width: size.width / 3,
+                child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    color: Colors.amber,
+                  ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               Padding(
@@ -70,15 +73,15 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       color: Colors.white, fontSize: 15, fontWeight: FontWeight.w400),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 25,
               ),
               textInputSection(
                   "Enter You Email Address", Icons.email_outlined, "email", emailController),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               GestureDetector(
@@ -95,7 +98,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   width: size.width,
                   height: 50,
                   alignment: Alignment.center,
-                  margin: EdgeInsets.symmetric(horizontal: 25, vertical: 12),
+                  margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 12),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.amber),
                   child: Text(
@@ -113,31 +116,55 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   }
 
   textInputSection(hint, icon, type, controller) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 3),
-      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.backgroundColor, width: 0.5)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              onSubmitted: (value) {},
-              style: GoogleFonts.nunito(color: AppColors.backgroundColor, fontSize: 14),
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  icon: Icon(
-                    icon,
-                    color: Colors.grey.shade500,
-                  ),
-                  hintText: hint,
-                  hintStyle: GoogleFonts.nunito(fontSize: 14, color: Colors.grey.shade500)),
+    // return Container(
+    //   margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 3),
+    //   padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+    //   decoration: BoxDecoration(
+    //       borderRadius: BorderRadius.circular(12),
+    //       border: Border.all(color: AppColors.backgroundColor, width: 0.5)),
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       Expanded(
+    //         child: TextField(
+    //           controller: controller,
+    //           onSubmitted: (value) {},
+    //           style: GoogleFonts.nunito(color: AppColors.backgroundColor, fontSize: 14),
+    //           decoration: InputDecoration(
+    //               border: InputBorder.none,
+    //               icon: Icon(
+    //                 icon,
+    //                 color: Colors.grey.shade500,
+    //               ),
+    //               hintText: hint,
+    //               hintStyle: GoogleFonts.nunito(fontSize: 14, color: Colors.grey.shade500)),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        autofillHints: const [AutofillHints.username],
+        cursorColor: Colors.amber,
+        controller: controller,
+        style: GoogleFonts.nunito(color: AppColors.backgroundColor, fontSize: 14),
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color.fromRGBO(255, 255, 255, 0.8)),
+                borderRadius: BorderRadius.all(Radius.circular(12.0))),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.white, width: 0),
+              borderRadius: BorderRadius.circular(12.0),
             ),
-          ),
-        ],
+            icon: Icon(
+              icon,
+              color: Colors.grey.shade500,
+            ),
+            hintText: hint,
+            hintStyle: GoogleFonts.nunito(fontSize: 14, color: Colors.grey.shade500)),
       ),
     );
   }

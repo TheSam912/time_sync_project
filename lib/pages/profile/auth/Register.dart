@@ -117,13 +117,13 @@ class _RegisterState extends ConsumerState<Register> {
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       children: [
-                        SizedBox(
-                          width: 150,
-                          height: 150,
+                        Container(
+                          height: 100,
+                          width: 100,
+                          margin: const EdgeInsets.only(bottom: 16),
                           child: Image.asset(
-                            "assets/images/successful.png",
+                            "assets/images/logo.png",
                             color: Colors.amber,
-                            fit: BoxFit.contain,
                           ),
                         ),
                         const SizedBox(
@@ -140,6 +140,7 @@ class _RegisterState extends ConsumerState<Register> {
                                   TextFormField(
                                     keyboardType: TextInputType.emailAddress,
                                     autofillHints: const [AutofillHints.username],
+                                    cursorColor: Colors.amber,
                                     controller: emailController,
                                     style: GoogleFonts.nunito(
                                         color: AppColors.backgroundColor, fontSize: 14),
@@ -167,6 +168,7 @@ class _RegisterState extends ConsumerState<Register> {
                                   TextFormField(
                                     obscuringCharacter: '*',
                                     obscureText: isObscure,
+                                    cursorColor: Colors.amber,
                                     autofillHints: const [AutofillHints.password],
                                     controller: passwordController,
                                     inputFormatters: [
@@ -212,6 +214,7 @@ class _RegisterState extends ConsumerState<Register> {
                                   TextFormField(
                                     obscuringCharacter: '*',
                                     obscureText: isObscureConfirm,
+                                    cursorColor: Colors.amber,
                                     autofillHints: const [AutofillHints.password],
                                     controller: confirmPasswordController,
                                     inputFormatters: [
@@ -276,7 +279,7 @@ class _RegisterState extends ConsumerState<Register> {
                               style: GoogleFonts.nunito(
                                   color: AppColors.mainItemColor,
                                   fontSize: 16,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w800),
                             ),
                           ),
                         ),

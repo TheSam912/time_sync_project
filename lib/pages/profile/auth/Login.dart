@@ -91,11 +91,11 @@ class _LoginState extends ConsumerState<Login> {
                 shrinkWrap: true,
                 children: [
                   Container(
-                    height: 150,
-                    width: 150,
-                    margin: const EdgeInsets.only(bottom: 16),
+                    height: 100,
+                    width: 100,
+                    margin: const EdgeInsets.only(bottom: 26),
                     child: Image.asset(
-                      "assets/images/successful.png",
+                      "assets/images/logo.png",
                       color: Colors.amber,
                     ),
                   ),
@@ -111,6 +111,7 @@ class _LoginState extends ConsumerState<Login> {
                             keyboardType: TextInputType.emailAddress,
                             autofillHints: const [AutofillHints.username],
                             controller: emailController,
+                            cursorColor: Colors.amber,
                             style:
                                 GoogleFonts.nunito(color: AppColors.backgroundColor, fontSize: 14),
                             decoration: InputDecoration(
@@ -136,6 +137,7 @@ class _LoginState extends ConsumerState<Login> {
                           TextFormField(
                             obscuringCharacter: '*',
                             obscureText: isObscure,
+                            cursorColor: Colors.amber,
                             autofillHints: const [AutofillHints.password],
                             controller: passwordController,
                             inputFormatters: [
@@ -201,7 +203,7 @@ class _LoginState extends ConsumerState<Login> {
                         style: GoogleFonts.nunito(
                             color: AppColors.mainItemColor,
                             fontSize: 16,
-                            fontWeight: FontWeight.w600),
+                            fontWeight: FontWeight.w800),
                       ),
                     ),
                   ),
