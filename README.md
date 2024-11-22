@@ -1,3 +1,20 @@
+## Screenshots
+
+![Home Screen](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/main.PNG)
+*Home Screen showcasing the list of programs.*
+
+![Detail Program Screen](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/detail.PNG)
+*Detail Program Screen showcasing the list of program's detail.*
+
+![Today Page](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/today.PNG)
+*Today page displaying the daily routine.*
+
+![Category Page](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/category.PNG)
+*Programs categorized for specific needs.*
+
+![AI Integration](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/ai.PNG)
+*AI-powered customization page.*
+
 # Personalized Healthcare Routine App  
 
 The **Personalized Healthcare Routine App** is an innovative and user-friendly mobile application built using **Flutter**. This app is designed to help users structure their daily routines and focus on specific areas of personal development, health, or productivity. By combining **state-of-the-art UI design**, **powerful backend architecture**, and **AI integration**, this app provides users with a tailored experience to achieve their goals effectively.  
