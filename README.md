@@ -1,20 +1,12 @@
 ## Screenshots
 
-<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/main.PNG" alt="Home Screen" width="300"/>  
-*Home Screen showcasing the list of programs.*
+| ![Home Screen](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/main.PNG) | ![Detail Page](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/detail.PNG) |
+|:-------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------:|
+| *Home Screen showcasing the list of programs.*                                                        | *Detail page displaying the daily routine.*                                                           |
 
-<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/detail.PNG" alt="Home Screen" width="300"/>  
-*Detail Screen showcasing the list of program's details.*
-
-<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/today.PNG" alt="Today Page" width="300"/>  
-*Today page displaying the daily routine.*
-
-<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/category.PNG" alt="Category Page" width="300"/>  
-*Programs categorized for specific needs.*
-
-<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/ai.PNG" alt="AI Integration" width="300"/>  
-*AI-powered customization page.*
-
+| ![Category Page](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/category.PNG) | ![AI Integration](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/ai.PNG) |
+|:-----------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------:|
+| *Programs categorized for specific needs.*                                                                  | *AI-powered customization page.*                                                                                |
 
 # Personalized Healthcare Routine App  
 
