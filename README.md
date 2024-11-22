@@ -1,19 +1,20 @@
 ## Screenshots
 
-![Home Screen](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/main.PNG)
+<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/main.PNG" alt="Home Screen" width="300"/>  
 *Home Screen showcasing the list of programs.*
 
-![Detail Program Screen](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/detail.PNG)
-*Detail Program Screen showcasing the list of program's detail.*
+<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/detail.PNG" alt="Home Screen" width="300"/>  
+*Detail Screen showcasing the list of program's details.*
 
-![Today Page](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/today.PNG)
+<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/today.PNG" alt="Today Page" width="300"/>  
 *Today page displaying the daily routine.*
 
-![Category Page](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/category.PNG)
+<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/category.PNG" alt="Category Page" width="300"/>  
 *Programs categorized for specific needs.*
 
-![AI Integration](https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/ai.PNG)
+<img src="https://github.com/TheSam912/time_sync_project/blob/main/assets/screenshots/ai.PNG" alt="AI Integration" width="300"/>  
 *AI-powered customization page.*
+
 
 # Personalized Healthcare Routine App  
 
