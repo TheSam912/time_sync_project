@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:time_sync/Widgets/loading.dart';
-import 'package:time_sync/model/UserModel.dart';
 import '../../Widgets/HomePage_Widgets.dart';
 import '../../Widgets/custom_snackbar.dart';
 import '../../Widgets/editProgramBottomSheet.dart';
@@ -32,6 +32,7 @@ class _TodayState extends ConsumerState<Today> {
   String? userEmail;
   late String titleDate;
   var programResponse;
+  List<ProgramModelRoutineItems>? roadMapElements = [];
   bool loading = true;
   bool havePlan = true;
   ProgramModel? userStateProgram;
@@ -47,7 +48,8 @@ class _TodayState extends ConsumerState<Today> {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                handleRequest();
+                // handleRequest();
+                handleRequestLocal();
                 return profileDesign();
               }
               return nothingDesign();
@@ -93,6 +95,23 @@ class _TodayState extends ConsumerState<Today> {
         });
       }
     });
+  }
+
+  handleRequestLocal() async {
+    var jsonRes = await rootBundle.loadString("assets/data/program.json");
+    var jsonResponse = jsonDecode(jsonRes);
+    programResponse = ProgramModel.fromJson(jsonResponse);
+    if (programResponse != null) {
+      var items = programResponse!.routineItems;
+      if (items != null) {
+        roadMapElements = items is List<Map<String, dynamic>>
+            ? items.map((item) => ProgramModelRoutineItems.fromJson(item)).toList()
+            : List<ProgramModelRoutineItems>.from(items);
+      }
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   Future<void> removeProgramForUser() async {
@@ -429,7 +448,7 @@ class _TodayState extends ConsumerState<Today> {
       child: SizedBox(
         child: ListView.builder(
           shrinkWrap: true,
-          itemCount: programResponse?.routineItems?.length,
+          itemCount: roadMapElements?.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, i) {
             return Stack(

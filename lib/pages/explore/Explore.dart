@@ -51,6 +51,14 @@ class _ExploreState extends ConsumerState<Explore> {
   Widget build(BuildContext context) {
     titleDate = DateFormat.yMMMEd().format(DateTime.now());
     _handleRequest();
+    categoryList = [
+      CategoryModel(Id: "",title: "Loss Weight"),
+      CategoryModel(Id: "",title: "OCD"),
+      CategoryModel(Id: "",title: "ADHD"),
+      CategoryModel(Id: "",title: "Balanced"),
+      CategoryModel(Id: "",title: "Productivity"),
+      CategoryModel(Id: "",title: "Fitness"),
+    ];
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: appBarSection(titleDate, context),
