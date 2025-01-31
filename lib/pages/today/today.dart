@@ -301,11 +301,21 @@ class _TodayState extends ConsumerState<Today> {
       builder: (context) {
         return Container(
           width: MediaQuery.of(context).size.width,
-          height: 150,
+          height: 250,
           color: AppColors.mainItemColor,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              _buildBottomSheetOption(
+                context: context,
+                text: "Add New Program",
+                color: AppColors.backgroundColor,
+                onTap: () {
+                  Navigator.pop(context);
+                  context.pushNamed("newprogram");
+                  // _editProgram(context);
+                },
+              ),
               _buildBottomSheetOption(
                 context: context,
                 text: "Edit The Program",

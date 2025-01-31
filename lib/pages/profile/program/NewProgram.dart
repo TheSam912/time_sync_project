@@ -76,7 +76,7 @@ class _NewprogramState extends ConsumerState<Newprogram> {
 
   @override
   Widget build(BuildContext context) {
-    handleRequest();
+    //handleRequest();
     sliderValue1 = ref.watch(sliderValue1Provider);
     sliderValue2 = ref.watch(sliderValue2Provider);
     sliderValue3 = ref.watch(sliderValue3Provider);
